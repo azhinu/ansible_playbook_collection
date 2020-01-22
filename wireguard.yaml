@@ -1,11 +1,12 @@
 # https://github.com/githubixx/ansible-role-wireguard
 ---
 - name: "Set up"
-  hosts: all
+  hosts: {{selected_hosts}}
   become: true
   roles:
     - githubixx.ansible_role_wireguard
   vars:
+    selected_hosts: all
     wireguard_remote_directory: "/etc/wireguard"
     wireguard_port: "51820"
     wireguard_interface: "wg0"

@@ -1,7 +1,9 @@
 # https://github.com/haxorof/ansible-role-docker-ce
-- hosts: all
+- hosts: {{selected_hosts}}
   become: true
   roles:
     - geerlingguy.repo-epel
     - geerlingguy.pip
     - haxorof.docker_ce
+  vars:
+    selected_hosts: all

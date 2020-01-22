@@ -1,6 +1,8 @@
 # https://github.com/githubixx/ansible-role-harden-linux
-- hosts: all
+- hosts: {{selected_hosts}}
   become: true
   roles:
     - githubixx.harden-linux
     - geerlingguy.repo-epel
+  vars:
+    selected_hosts: all
