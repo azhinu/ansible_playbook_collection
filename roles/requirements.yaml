@@ -1,5 +1,6 @@
 ---
 - src: git+https://github.com/githubixx/ansible-role-wireguard
-- src: geerlingguy.pip
-- src: geerlingguy.docker
+- src: haxorof.docker_ce
 - src: githubixx.harden-linux
+- src: geerlingguy.pip
+- src: geerlingguy.repo-epel
