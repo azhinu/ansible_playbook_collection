@@ -4,3 +4,4 @@
 - src: githubixx.harden-linux
 - src: geerlingguy.pip
 - src: geerlingguy.repo-epel
+- src: git+https://github.com/ryandaniels/ansible-role-create-users
