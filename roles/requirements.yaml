@@ -1,0 +1,5 @@
+---
+- src: git+https://github.com/githubixx/ansible-role-wireguard
+- src: geerlingguy.pip
+- src: geerlingguy.docker
+- src: githubixx.harden-linux
