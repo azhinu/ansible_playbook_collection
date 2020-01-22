@@ -1,7 +1,7 @@
 # https://github.com/githubixx/ansible-role-wireguard
 ---
 - name: "Set up"
-  hosts: {{selected_hosts}}
+  hosts: "{{selected_hosts}}"
   become: true
   roles:
     - githubixx.ansible_role_wireguard

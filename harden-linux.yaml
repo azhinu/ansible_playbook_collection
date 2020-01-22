@@ -1,5 +1,5 @@
 # https://github.com/githubixx/ansible-role-harden-linux
-- hosts: {{selected_hosts}}
+- hosts: "{{selected_hosts}}"
   become: true
   roles:
     - githubixx.harden-linux

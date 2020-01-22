@@ -1,6 +1,6 @@
 # https://github.com/ryandaniels/ansible-role-create-users
 ---
-- hosts: {{selected_hosts}}
+- hosts: "{{selected_hosts}}"
   become: yes
   roles:
   - ryandaniels.create_users
