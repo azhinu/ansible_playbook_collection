@@ -1,0 +1,7 @@
+- name: Download rmate
+  get_url:
+    url: https://raw.githubusercontent.com/aurora/rmate/master/rmate
+    dest: /sbin/atom
+    mode: '0755'
+- name: upgrade all packages
+  yum: name=* state=latest
