@@ -1,7 +1,7 @@
 ---
-- src: git+https://github.com/githubixx/ansible-role-wireguard
+- src: githubixx.ansible_role_wireguard
 - src: haxorof.docker_ce
 - src: githubixx.harden-linux
 - src: geerlingguy.pip
 - src: geerlingguy.repo-epel
-- src: git+https://github.com/ryandaniels/ansible-role-create-users
+- src: ryandaniels.create_users

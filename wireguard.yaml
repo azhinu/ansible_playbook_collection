@@ -4,7 +4,7 @@
   hosts: all
   become: true
   roles:
-    - ansible-role-wireguard
+    - githubixx.ansible_role_wireguard
   vars:
     wireguard_remote_directory: "/etc/wireguard"
     wireguard_port: "51820"
