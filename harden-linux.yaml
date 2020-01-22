@@ -4,7 +4,7 @@
   roles:
     - githubixx.harden-linux
     - geerlingguy.repo-epel
-      when: ansible_os_family == "CentOS"
+      when: ansible_os_family == "RedHat"
   vars:
     selected_hosts: all
   post_tasks:
