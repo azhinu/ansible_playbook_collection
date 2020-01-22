@@ -2,3 +2,4 @@
   become: true
   roles:
     - githubixx.harden-linux
+    - geerlingguy.repo-epel
