@@ -33,6 +33,7 @@
     pkg: "{{ harden_linux_required_packages }}"
   retries: 2
   delay: 5
+  ignore_errors: yes
   tags:
     - ufw
 

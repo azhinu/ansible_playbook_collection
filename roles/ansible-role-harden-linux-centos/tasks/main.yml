@@ -13,6 +13,7 @@
     state: latest
   retries: 2
   delay: 5
+  ignore_errors: yes
 
 - name: Install openntpd/ntp package if requested
   package:

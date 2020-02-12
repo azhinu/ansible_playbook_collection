@@ -9,7 +9,7 @@ harden_linux_required_packages:
   - nano
   - git
   - bash-completion
-  - bash-completion-extra
+  - bash-completion-extras
   - curl
 
 # NTP packages to install. By default "openntpd" is used. You can als use "ntp"
