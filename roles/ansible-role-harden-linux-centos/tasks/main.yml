@@ -47,16 +47,6 @@
 
 - name: Add deploy user
   user:
-    name: "{{ harden_linux_deploy_user }}"
-    password: "{{ harden_linux_deploy_user_password }}"
-    uid: "{{ harden_linux_deploy_user_uid }}"
-    shell: "{{ harden_linux_deploy_user_shell }}"
-    home: "{{ harden_linux_deploy_user_home }}"
-  tags:
-    - user
-
-- name: Add deploy user
-  user:
     name: awx
     password: yIS2fz06h2PK6
     uid: "{{ harden_linux_deploy_user_uid }}"
