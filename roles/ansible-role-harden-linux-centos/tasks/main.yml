@@ -114,3 +114,8 @@
     - "{{ harden_linux_sshguard_whitelist }}"
   tags:
     - sshguard
+
+- name: Disable root user
+  user:
+    name: root
+    password: '!'
