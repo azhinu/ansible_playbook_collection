@@ -5,7 +5,6 @@ harden_linux_deploy_user_uid: 9999
 # Packages required by this role
 harden_linux_required_packages:
   - sshguard
-  - unattended-upgrades
   - sudo
   - nano
   - git
