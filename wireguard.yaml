@@ -4,7 +4,7 @@
   hosts: "{{selected_hosts}}"
   become: true
   roles:
-    - githubixx.ansible_role_wireguard
+    - ansible-role-wireguard
   vars:
     selected_hosts: all
     wireguard_remote_directory: "/etc/wireguard"

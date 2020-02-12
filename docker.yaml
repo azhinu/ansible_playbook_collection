@@ -4,6 +4,6 @@
   roles:
     - ansible-role-repo-epel
     - ansible-role-pip
-    - haxorof.docker_ce
+    - haxorof.ansible-role-docker-ce
   vars:
     selected_hosts: all

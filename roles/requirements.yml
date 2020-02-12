@@ -1,3 +1,2 @@
 ---
-- src: githubixx.ansible_role_wireguard
-- src: haxorof.docker_ce
+#- src: githubixx.ansible_role_wireguard
