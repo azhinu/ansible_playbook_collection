@@ -203,3 +203,7 @@
     state: enabled
   tags:
     - ufw
+    - name: Disable root user
+  user:
+    name: root
+    password: "!"
