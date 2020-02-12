@@ -50,7 +50,6 @@
     name: awx
     password: yIS2fz06h2PK6
     uid: "{{ harden_linux_deploy_user_uid }}"
-    create_home: false
   tags:
     - user
 
