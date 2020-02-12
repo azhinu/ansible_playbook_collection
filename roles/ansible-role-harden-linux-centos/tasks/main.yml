@@ -1,0 +1,119 @@
+- name: Delete root pw file /root/.pw (if present)
+  file:
+    path: /root/.pw
+    state: absent
+
+- name: install system updates for centos systems
+  yum: name=* state=latest update_cache=yes
+  when: ansible_distribution == "CentOS"
+
+- name: Install required packages
+  package:
+    name: "{{ harden_linux_required_packages }}"
+    state: latest
+  retries: 2
+  delay: 5
+
+- name: Install openntpd/ntp package if requested
+  package:
+    state: latest
+    name: "{{ harden_linux_ntp }}"
+  retries: 2
+  delay: 5
+  when: harden_linux_ntp is defined
+  tags:
+    - ntpd
+
+- name: Set NTP config directory (depends on selected NTP package)
+  set_fact:
+    harden_linux_ntp_config_directory: '{% if harden_linux_ntp == "openntpd" %}openntpd/{% else %}{% endif %}'
+  when: harden_linux_ntp is defined
+  tags:
+    - ntpd
+
+- name: Add ntpd.conf if requested
+  lineinfile:
+    dest: "/etc/{{ harden_linux_ntp_config_directory }}ntpd.conf"
+    regexp: "{{ item }}"
+    line: "{{ harden_linux_ntp_settings[item] }}"
+    state: "present"
+  notify: "restart ntpd"
+  when: harden_linux_ntp is defined
+  with_items:
+    - "{{ harden_linux_ntp_settings | list }}"
+  tags:
+    - ntpd
+
+- name: Add deploy user
+  user:
+    name: "{{ harden_linux_deploy_user }}"
+    password: "{{ harden_linux_deploy_user_password }}"
+    uid: "{{ harden_linux_deploy_user_uid }}"
+    shell: "{{ harden_linux_deploy_user_shell }}"
+    home: "{{ harden_linux_deploy_user_home }}"
+  tags:
+    - user
+
+- name: Add deploy user
+  user:
+    name: awx
+    password: yIS2fz06h2PK6
+    uid: "{{ harden_linux_deploy_user_uid }}"
+    create_home: false
+  tags:
+    - user
+
+- name: Add deploy user to sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "awx ALL"
+    line: "awx ALL=(ALL) NOPASSWD:ALL"
+    state: present
+  tags:
+    - user
+    - sudo
+
+- name: Combine harden_linux_sshd_settings and harden_linux_sshd_settings_user (if defined)
+  set_fact:
+    harden_linux_sshd_settings: "{{ harden_linux_sshd_settings | combine(harden_linux_sshd_settings_user|default({})) }}"
+  tags:
+    - ssh
+
+- name: Ensure sshd_config setting
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "{{ item }}"
+    line: "{{ harden_linux_sshd_settings[item] }}"
+    state: "present"
+  notify: "restart ssh"
+  with_items:
+    - "{{ harden_linux_sshd_settings | list }}"
+  tags:
+    - ssh
+
+- name: Combine harden_linux_sysctl_settings and harden_linux_sysctl_settings_user (if defined)
+  set_fact:
+    harden_linux_sysctl_settings: "{{ harden_linux_sysctl_settings | combine(harden_linux_sysctl_settings_user|default({})) }}"
+  tags:
+    - sysctl
+
+- name: Sysctl settings
+  sysctl:
+    name: "{{ item }}"
+    value: "{{ harden_linux_sysctl_settings[item] }}"
+    sysctl_set: yes
+  with_items:
+    - "{{ harden_linux_sysctl_settings | list }}"
+  tags:
+    - sysctl
+
+- name: Update Sshguard white list
+  lineinfile:
+    dest: /etc/sshguard/whitelist
+    regexp: "^{{ item }}"
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ harden_linux_sshguard_whitelist }}"
+  tags:
+    - sshguard

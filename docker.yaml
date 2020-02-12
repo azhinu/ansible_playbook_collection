@@ -2,8 +2,8 @@
 - hosts: "{{selected_hosts}}"
   become: true
   roles:
-    - geerlingguy.repo-epel
-    - geerlingguy.pip
+    - ansible-role-repo-epel
+    - ansible-role-pip
     - haxorof.docker_ce
   vars:
     selected_hosts: all
