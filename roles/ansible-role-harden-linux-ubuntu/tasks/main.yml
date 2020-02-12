@@ -206,4 +206,4 @@
 - name: Disable root user  
   user:
     name: root
-    password: "!"
+    password: !
