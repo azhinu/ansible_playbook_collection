@@ -100,7 +100,7 @@
 
 - name: Update Sshguard white list
   lineinfile:
-    dest: /etc/sshguard/whitelist
+    dest: /etc/sshguard.whitelist
     regexp: "^{{ item }}"
     line: "{{ item }}"
     state: present
