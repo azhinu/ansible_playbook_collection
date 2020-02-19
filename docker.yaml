@@ -2,7 +2,7 @@
 - hosts: "{{selected_hosts}}"
   become: true
   roles:
-    - ansible-role-repo-epel
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
     - ansible-role-pip
     - haxorof.ansible-role-docker-ce
   vars:
