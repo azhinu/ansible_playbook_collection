@@ -2,8 +2,8 @@
 - hosts: "{{selected_hosts}}"
   become: true
   roles:
-    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
-    - { role: ansible-role-harden-linux-centos, when: ansible_os_family == 'RedHat' }
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma' }
+    - { role: ansible-role-harden-linux-centos, when: ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma' }
     - { role: ansible-role-harden-linux-ubuntu, when: ansible_os_family == 'Debian' }
   vars:
     selected_hosts: all
