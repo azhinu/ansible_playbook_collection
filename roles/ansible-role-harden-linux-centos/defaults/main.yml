@@ -11,6 +11,7 @@ harden_linux_required_packages:
   - bash-completion
   - bash-completion-extras
   - curl
+  - nmap-ncat
 
 # NTP packages to install. By default "openntpd" is used. You can als use "ntp"
 # package. But "openntpd" has the advantage that it doesn't listen on any ports
