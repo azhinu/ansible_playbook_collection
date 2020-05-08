@@ -8,6 +8,11 @@ harden_linux_required_packages:
   - sshguard
   - unattended-upgrades
   - sudo
+  - git
+  - netcat
+  - nano
+  - curl
+
 
 # NTP packages to install. By default "openntpd" is used. You can als use "ntp"
 # package. But "openntpd" has the advantage that it doesn't listen on any ports

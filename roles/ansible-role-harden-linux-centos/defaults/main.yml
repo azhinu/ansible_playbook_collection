@@ -11,8 +11,7 @@ harden_linux_required_packages:
   - bash-completion
   - bash-completion-extras
   - curl
-  - nc
-  - net-tools
+  - netcat
   - gcc
   - python-devel
 
