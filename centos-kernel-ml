@@ -1,0 +1,27 @@
+---
+- hosts: "{{selected_hosts}}"
+  become: true
+  roles:
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
+  vars:
+    selected_hosts: all
+  tasks:
+  - fail:
+      msg: This is not Centos
+    when: ansible_distribution != 'CentOS'
+    
+  - name: Install Kernel-LT
+    package:
+      name:
+        - kernel-ml
+        - kernel-ml-headers
+        - kernel-ml-tools
+        - kernel-ml-devel
+        - yum-utils
+      state: latest
+
+  - name: Set new kernel as default
+    command: grub2-set-default 0 && grub2-mkconfig -o /boot/grub2/grub.cfg
+
+  - name: Remove Old kernels
+    command: package-cleanup --oldkernels -y
