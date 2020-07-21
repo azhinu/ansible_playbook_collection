@@ -23,11 +23,12 @@
   - name: Enable ELRepo Kernel
     command: yum-config-manager --enable elrepo-kernel
     
-  - name: Install Kernel-LT
+  - name: Remove old headers
     package:
       name:
         - kernel-headers
         - kernel-tools
+        - kernel-tools-libs
         - kernel-devel
       state: absent
     
