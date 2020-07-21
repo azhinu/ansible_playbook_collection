@@ -12,13 +12,13 @@
     
   - name: Import ELRepo key
     rpm_key:
-    state: present
-    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+      state: present
+      key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
     
   - name: Install ELRepo
     yum:
-    name: https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
-    state: present
+      name: https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
+      state: present
     
   - name: Enable ELRepo Kernel
     command: yum-config-manager --enable elrepo-kernel
