@@ -10,6 +10,19 @@
       msg: This is not Centos
     when: ansible_distribution != 'CentOS'
     
+  - name: Import ELRepo key
+    rpm_key:
+    state: present
+    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    
+  - name: Install ELRepo
+    yum:
+    name: https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
+    state: present
+    
+  - name: Enable ELRepo Kernel
+    command: yum-config-manager --enable elrepo-kernel
+    
   - name: Install Kernel-LT
     package:
       name:
