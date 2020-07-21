@@ -26,6 +26,14 @@
   - name: Install Kernel-LT
     package:
       name:
+        - kernel-headers
+        - kernel-tools
+        - kernel-devel
+      state: absent
+    
+  - name: Install Kernel-LT
+    package:
+      name:
         - kernel-ml
         - kernel-ml-headers
         - kernel-ml-tools
