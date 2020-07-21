@@ -21,7 +21,7 @@
       state: present
     
   - name: Enable ELRepo Kernel
-    command: yum-config-manager --enable elrepo-kernel
+    command: 'yum-config-manager --enable elrepo-kernel'
     
   - name: Remove old headers
     package:
@@ -43,7 +43,7 @@
       state: latest
 
   - name: Set new kernel as default
-    command: grub2-set-default 0 && grub2-mkconfig -o /boot/grub2/grub.cfg
+    command: 'grub2-set-default 0 && grub2-mkconfig -o /boot/grub2/grub.cfg'
 
   - name: Remove Old kernels
-    command: package-cleanup --oldkernels -y
+    command: 'package-cleanup --oldkernels -y'
