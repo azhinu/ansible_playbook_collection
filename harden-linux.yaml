@@ -7,3 +7,10 @@
     - { role: ansible-role-harden-linux-ubuntu, when: ansible_os_family == 'Debian' }
   vars:
     selected_hosts: all
+  tasks:
+    - name: Ensure the locale exists
+    locale_gen:
+      name: en_DK.utf8
+      state: present
+    - name: Set en_DK.utf8 as default locale
+      command: localectl set-locale LANG=en_DK.utf8 LC_ALL=en_DK.utf8
