@@ -12,7 +12,7 @@
     wireguard_interface: "wg0"
     wireguard_allowed_ips: "10.1.0.0/24"
   tasks:
-    - name: bla
+    - name: Enable traffic forwarding
       sysctl:
         name: net.ipv4.ip_forward
         value: '1'

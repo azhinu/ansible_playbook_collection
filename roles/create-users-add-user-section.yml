@@ -1,0 +1,33 @@
+---
+- name: Add users
+  user:
+    name: "{{ item.username }}"
+    uid: "{{ item.uid | default(omit) }}"
+    password: "{{ item.password | default(omit) }}"
+    update_password: "{{ item.update_password if item.update_password is defined else 'on_create' }}"
+    groups: "{{ item.groups | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    shell: /bin/bash
+    expires: -1
+    append: true
+    state: present
+  register: add_user
+
+- name: Disable user password
+  command: "passwd -de {{ item.username }}"
+  when: add_user.changed and item.passwd is not defined  or item.update_password == 'always'
+
+- name: Add User to sudoers
+  user:
+    name: "{{ item.username}}"
+    groups: "{{ 'wheel' if ansible_os_family == 'RedHat' else 'sudo' if ansible_os_family == 'Debian'}}"
+    append: true
+  when: item.use_sudo
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ item.ssh_key }}"
+    exclusive: "{{ item.exclusive_ssh_key | default(omit) }}"
+    state: present
+  when: item.ssh_key is defined
