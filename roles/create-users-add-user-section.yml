@@ -14,7 +14,11 @@
   register: add_user
 
 - name: Disable user password
-  command: "passwd -de {{ item.username }}"
+  command: "passwd -d {{ item.username }}"
+  when: add_user.changed and item.passwd is not defined  or item.update_password == 'always'
+
+- name: Expire user password
+  command: "passwd -e {{ item.username }}"
   when: add_user.changed and item.passwd is not defined  or item.update_password == 'always'
 
 - name: Add User to sudoers
