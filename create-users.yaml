@@ -2,7 +2,6 @@
 - hosts: "{{ selected_hosts }}"
   become: true
   vars:
-    selected_hosts: all
     users:
       user_state: present
       use_sudo: false

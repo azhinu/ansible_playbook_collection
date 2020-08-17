@@ -4,5 +4,3 @@
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
     - ansible-role-harden-simplified
-  vars:
-    selected_hosts: all

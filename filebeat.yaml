@@ -4,5 +4,3 @@
   become: yes
   roles:
   - ansible-role-filebeat
-  vars:
-    selected_hosts: all

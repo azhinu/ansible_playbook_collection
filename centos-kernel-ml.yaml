@@ -3,8 +3,6 @@
   become: true
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
-  vars:
-    selected_hosts: all
   tasks:
   - fail:
       msg: This is not Centos

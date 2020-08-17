@@ -5,5 +5,3 @@
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
     - ansible-role-pip
     - haxorof.ansible-role-docker-ce
-  vars:
-    selected_hosts: all

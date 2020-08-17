@@ -7,5 +7,3 @@
         url: https://raw.githubusercontent.com/aurora/rmate/master/rmate
         dest: /sbin/atom
         mode: '0755'
-  vars:
-    selected_hosts: all
