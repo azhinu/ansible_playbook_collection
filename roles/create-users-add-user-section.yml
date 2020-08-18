@@ -15,11 +15,11 @@
 
 - name: Disable user password
   command: "passwd -d {{ item.username }}"
-  when: add_user.changed and item.passwd is not defined  or item.update_password|default('on_create') == 'always'
+  when: (add_user.changed and item.passwd is not defined)  or ( item.passwd is not defined and item.update_password|default('on_create') == 'always' ) or ( item.passwd is not defined and reset_all_passwords|default(False)|bool )
 
 - name: Expire user password
   command: "passwd -e {{ item.username }}"
-  when: add_user.changed and item.passwd is not defined  or item.update_password|default('on_create') == 'always'
+  when: (add_user.changed and item.passwd is not defined)  or ( item.passwd is not defined and item.update_password|default('on_create') == 'always' ) or ( item.passwd is not defined and reset_all_passwords|default(False)|bool )
 
 - name: Add User to sudoers
   user:
