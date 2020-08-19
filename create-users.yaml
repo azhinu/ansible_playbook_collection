@@ -24,7 +24,7 @@
     when: item.user_state|default('present') == 'present'
     loop: "{{ users }}"
     loop_control:
-      label: "username: {{ item.username }}, user_state: {{ item.user_state }}, password: {{ 'True' if item.password is defined else 'No' }}, update_password: {{ item.update_password if item.update_password is defined else 'on_create' }}, sudo: {{ item.use_sudo }}, groups: {{ item.groups if item.groups is defined else ''}}"
+      label: "username: {{ item.username }}, user_state: {{ item.user_state|default('present') }}, password: {{ 'True' if item.password is defined else 'No' }}, update_password: {{ item.update_password if item.update_password is defined else 'on_create' }}, sudo: {{ item.use_sudo }}, groups: {{ item.groups if item.groups is defined else ''}}"
 
   - name: Lock users | Lock password & ssh key authentication
     user:
@@ -33,4 +33,4 @@
     when: item.user_state|default('present') == 'lock'
     loop: "{{ users }}"
     loop_control:
-      label: "username: {{ item.username }}, user_state: {{ item.user_state }}"
+      label: "username: {{ item.username }}, user_state: {{ item.user_state|default('present') }}"
