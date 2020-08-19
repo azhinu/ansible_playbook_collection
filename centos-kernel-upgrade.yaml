@@ -4,7 +4,7 @@
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
   vars:
-    kernel-version: lt
+    kernel_version: lt
   tasks:
   - fail:
       msg: This is not Centos
@@ -32,13 +32,13 @@
         - kernel-devel
       state: absent
 
-  - name: "Install Kernel-{{ kernel-version }}"
+  - name: "Install Kernel-{{ kernel_version }}"
     package:
       name:
-        - "kernel-{{ kernel-version }}"
-        - "kernel-{{ kernel-version }}-headers"
-        - "kernel-{{ kernel-version }}-tools"
-        - "kernel-{{ kernel-version }}-devel"
+        - "kernel-{{ kernel_version }}"
+        - "kernel-{{ kernel_version }}-headers"
+        - "kernel-{{ kernel_version }}-tools"
+        - "kernel-{{ kernel_version }}-devel"
         - yum-utils
       state: latest
 
