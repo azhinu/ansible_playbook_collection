@@ -1,0 +1,33 @@
+---
+- name: Get groups as list
+  set_fact:
+    groups_as_list: "{{ (groups_as_list|default([]) + item.groups.split(','))|map('trim')|list|sort|unique }}"
+  when: item.groups is defined
+  loop: "{{ users }}"
+  loop_control:
+    label: "username: {{ item.username }}, groups_as_list: {{ item.groups if item.groups is defined else '' }}"
+
+- name: Add group | create groups before adding user to group
+  group:
+    name: "{{ item }}"
+    state: present
+  when: groups_as_list is defined
+  loop: "{{ groups_as_list }}"
+  loop_control:
+    label: "groups: {{ item }}"
+
+- name: Add user section
+  include_tasks: add_user_section.yml
+  when: item.user_state|default('present') == 'present'
+  loop: "{{ users }}"
+  loop_control:
+    label: "username: {{ item.username }}, user_state: {{ item.user_state|default('present') }}, password: {{ 'True' if item.password is defined else 'No' }}, update_password: {{ item.update_password if item.update_password is defined else 'on_create' }}, sudo: {{ item.use_sudo }}, groups: {{ item.groups if item.groups is defined else ''}}"
+
+- name: Lock users | Lock password & ssh key authentication
+  user:
+    name: "{{ item.username }}"
+    expires: 0
+  when: item.user_state|default('present') == 'lock'
+  loop: "{{ users }}"
+  loop_control:
+    label: "username: {{ item.username }}, user_state: {{ item.user_state|default('present') }}"

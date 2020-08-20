@@ -1,6 +1,6 @@
 # https://github.com/geerlingguy/ansible-role-filebeat
 ---
-- hosts: "{{selected_hosts}}"
-  become: yes
+- hosts: "{{ selected_hosts }}"
+  become: true
   roles:
   - ansible-role-filebeat
