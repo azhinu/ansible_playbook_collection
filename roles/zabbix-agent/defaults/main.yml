@@ -1,0 +1,5 @@
+---
+zabbix_server_active:
+zabbix_client_port: 10050
+zabbix_server_ip: 192.168.232.30
+add_firewall_rule: false

@@ -6,7 +6,7 @@
     upgrade: safe
   when: ansible_os_family == 'Debian'
 
-- name: Upgrade packages (CentOS)
+- name: Upgrade packages (RedHat)
   yum:
     name: '*'
     state: latest
@@ -38,7 +38,7 @@
     password: "{{ harden_linux_deploy_user_password }}"
     uid: "{{ harden_linux_deploy_user_uid }}"
     shell: "{{ harden_linux_deploy_user_shell }}"
-    groups: "{{ 'wheel' if ansible_os_family == 'RedHat' else 'sudo' if ansible_os_family == 'Debian'}}"
+    groups: "{{ 'wheel' if ( ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo' if ansible_os_family == 'Debian'}}"
 
 - name: Add authorized keys for deploy user
   authorized_key:

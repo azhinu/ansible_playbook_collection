@@ -1,0 +1,8 @@
+---
+- name:
+  include: debian_based.yml
+  when: ansible_facts['os_family'] == "Debian"
+
+- name:
+  include: rhel_based.yml
+  when: ansible_facts['os_family'] == "RedHat" or ansible_facts['os_family'] == "Sangoma"
