@@ -39,20 +39,20 @@ Ansible Playbook: Add User
 #### Примеры Inventory
 ``` yaml
 users:
-  - username: tester
-    password: |
-      $6$EG9ucdhKIg1Wt$ydSSe6I9qaDAD7uCILIkCz/weanh2nCq8VlawLowZA2GTum.cwc6MQ315jNREMuotOpPYTsfr5NmeQB6NOOCF1
-    use_sudo: true
-    ssh_key: |
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwxnIc896RN0F51o6dVFko3EXjoiUnl5NipYvpmq8rdru54dPWFwh6b+EztGyO6CEmQ6A1BGrSiUC19hR9eORUqHp4ybsgVD4zZCDRy4zV1g4sCUnP5nLA3+zlIPpi1PUwRWBajaS1HaMETM/GP4nOmv4Yg0l98ReOWli/n5twMYqbZCJnJIqTKVGBGvL4jfWpmCEnB2i2bFCqkMWltOcYJD9Voc9n3s6FUWgCOvN4qN3y6kuMGby8IkMCeyqSRX73r6KtegyYbzF0Ic4HVg/n6D8IViNk/ZXt/JmPLHCl1LTkvUWCkvtf12QWELwogIZ6Z486nQJKgPJ8JyADTr/XqdwGWQ0K552UOGjYmXMbUz5SGxte8Dr03bAoPoRHDJl7YaqaUXL9/tTQ+2k+VNDd4L8CbAkurXzDH6Oc3P3q/WzYu0bnB2g3XeZvF8uhNzLWXmE0FZIcS0/vbxIN+adJo1143iR0dabkeHhg3cEW0KHMwvpLfFO9Kaqn0/eHZls=
-    user_state: present
+- username: tester
+  password: |
+    $6$EG9ucdhKIg1Wt$ydSSe6I9qaDAD7uCILIkCz/weanh2nCq8VlawLowZA2GTum.cwc6MQ315jNREMuotOpPYTsfr5NmeQB6NOOCF1
+  use_sudo: true
+  ssh_key: |
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwxnIc896RN0F51o6dVFko3EXjoiUnl5NipYvpmq8rdru54dPWFwh6b+EztGyO6CEmQ6A1BGrSiUC19hR9eORUqHp4ybsgVD4zZCDRy4zV1g4sCUnP5nLA3+zlIPpi1PUwRWBajaS1HaMETM/GP4nOmv4Yg0l98ReOWli/n5twMYqbZCJnJIqTKVGBGvL4jfWpmCEnB2i2bFCqkMWltOcYJD9Voc9n3s6FUWgCOvN4qN3y6kuMGby8IkMCeyqSRX73r6KtegyYbzF0Ic4HVg/n6D8IViNk/ZXt/JmPLHCl1LTkvUWCkvtf12QWELwogIZ6Z486nQJKgPJ8JyADTr/XqdwGWQ0K552UOGjYmXMbUz5SGxte8Dr03bAoPoRHDJl7YaqaUXL9/tTQ+2k+VNDd4L8CbAkurXzDH6Oc3P3q/WzYu0bnB2g3XeZvF8uhNzLWXmE0FZIcS0/vbxIN+adJo1143iR0dabkeHhg3cEW0KHMwvpLfFO9Kaqn0/eHZls=
+  user_state: present
 
-  - username: tester2
-    use_sudo: true
-    ssh_key: |
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwxnIc896RN0F51o6dVFko3EXjoiUnl5NipYvpmq8rdru54dPWFwh6b+EztGyO6CEmQ6A1BGrSiUC19hR9eORUqHp4ybsgVD4zZCDRy4zV1g4sCUnP5nLA3+zlIPpi1PUwRWBajaS1HaMETM/GP4nOmv4Yg0l98ReOWli/n5twMYqbZCJnJIqTKVGBGvL4jfWpmCEnB2i2bFCqkMWltOcYJD9Voc9n3s6FUWgCOvN4qN3y6kuMGby8IkMCeyqSRX73r6KtegyYbzF0Ic4HVg/n6D8IViNk/ZXt/JmPLHCl1LTkvUWCkvtf12QWELwogIZ6Z486nQJKgPJ8JyADTr/XqdwGWQ0K552UOGjYmXMbUz5SGxte8Dr03bAoPoRHDJl7YaqaUXL9/tTQ+2k+VNDd4L8CbAkurXzDH6Oc3P3q/WzYu0bnB2g3XeZvF8uhNzLWXmE0FZIcS0/vbxIN+adJo1143iR0dabkeHhg3cEW0KHMwvpLfFO9Kaqn0/eHZls=
-    user_state: present
+- username: tester2
+  use_sudo: true
+  ssh_key: |
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwxnIc896RN0F51o6dVFko3EXjoiUnl5NipYvpmq8rdru54dPWFwh6b+EztGyO6CEmQ6A1BGrSiUC19hR9eORUqHp4ybsgVD4zZCDRy4zV1g4sCUnP5nLA3+zlIPpi1PUwRWBajaS1HaMETM/GP4nOmv4Yg0l98ReOWli/n5twMYqbZCJnJIqTKVGBGvL4jfWpmCEnB2i2bFCqkMWltOcYJD9Voc9n3s6FUWgCOvN4qN3y6kuMGby8IkMCeyqSRX73r6KtegyYbzF0Ic4HVg/n6D8IViNk/ZXt/JmPLHCl1LTkvUWCkvtf12QWELwogIZ6Z486nQJKgPJ8JyADTr/XqdwGWQ0K552UOGjYmXMbUz5SGxte8Dr03bAoPoRHDJl7YaqaUXL9/tTQ+2k+VNDd4L8CbAkurXzDH6Oc3P3q/WzYu0bnB2g3XeZvF8uhNzLWXmE0FZIcS0/vbxIN+adJo1143iR0dabkeHhg3cEW0KHMwvpLfFO9Kaqn0/eHZls=
+  user_state: present
 
-  - username: tester3
-    user_state: lock
+- username: tester3
+  user_state: lock
 ```
