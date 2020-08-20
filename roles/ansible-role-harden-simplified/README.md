@@ -20,6 +20,13 @@ Ansible role: Harden linux (simplified)
 - gcc
 - python-devel
 - python3-devel
+- vim
+- mc
+- htop
+- mtr
+- tree
+- wget
+- net-tools
 
 * В случае выполнения на виртуальной машине, будет установлен пакет `open-vm-tools`
 * Добавлен служебный пользователь AWX

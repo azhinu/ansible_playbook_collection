@@ -21,6 +21,13 @@ harden_linux_required_packages:
   - gcc
   - python-devel
   - python3-devel
+  - vim
+  - mc
+  - htop
+  - mtr
+  - tree
+  - wget
+  - net-tools
 
 
 harden_linux_sysctl_settings:
