@@ -3,5 +3,4 @@
   become: true
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat'}
-    - ansible-role-repo-epel
     - ansible-role-harden-simplified
