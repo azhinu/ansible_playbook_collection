@@ -2,5 +2,6 @@
 - hosts: "{{selected_hosts}}"
   become: true
   roles:
-    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma' }
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat'}
+    - ansible-role-repo-epel
     - ansible-role-harden-simplified
