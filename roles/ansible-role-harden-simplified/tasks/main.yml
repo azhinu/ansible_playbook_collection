@@ -32,6 +32,11 @@
     state: present
   when: ansible_virtualization_type == "VMware"
 
+- name: Disable SELinux
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: Add deploy user
   user:
     name: "{{ harden_linux_deploy_user_name }}"
