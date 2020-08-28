@@ -4,7 +4,7 @@
   pre_tasks:
   - name: Ensure Python setuptools present
     package:
-      name: "{{ 'python-setuptools' if ansible_python_interpreter == '/usr/bin/python2' else 'python-setuptools' }}"
+      name: "{{ 'python3-setuptools' if ansible_python_version is version('3', '<') else 'python-setuptools' }}"
       state: present
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
