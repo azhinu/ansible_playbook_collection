@@ -1,0 +1,7 @@
+# https://github.com/geerlingguy/ansible-role-docker
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
+    - ansible-role-docker
+    - ansible-role-pip
