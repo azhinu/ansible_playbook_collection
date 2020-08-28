@@ -3,5 +3,17 @@
   become: true
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
-    - ansible-role-docker
     - ansible-role-pip
+    - ansible-role-docker
+  tasks:
+  - name: Install docker-compose
+    pip:
+      name: docker-compose
+
+  - name: Fix FirewallD for RHEL8
+    firewalld:
+      zone: trusted
+      interface: docker0
+      permanent: yes
+      state: enabled
+    when: ansible_distribution_version|int == 8
