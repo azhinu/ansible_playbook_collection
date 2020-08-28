@@ -1,6 +1,11 @@
 # https://github.com/geerlingguy/ansible-role-docker
 - hosts: "{{ selected_hosts }}"
   become: true
+  pre_tasks:
+  - name: Ensure Python setuptools present
+    package:
+      name: "{{ 'python-setuptools' if ansible_python_interpreter == '/usr/bin/python2' else 'python-setuptools' }}"
+      state: present
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
     - ansible-role-pip
