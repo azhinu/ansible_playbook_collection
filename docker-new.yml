@@ -8,13 +8,8 @@
       state: present
   roles:
     - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
-    - ansible-role-pip
     - ansible-role-docker
   tasks:
-  - name: Install docker-compose
-    pip:
-      name: docker-compose
-
   - name: Fix FirewallD for RHEL8
     firewalld:
       zone: public
