@@ -1,0 +1,32 @@
+- name: Download acme.sh
+  git:
+    repo: 'https://github.com/Neilpang/acme.sh.git'
+    dest: '/tmp/acme.sh'
+
+- name: Install acme.sh
+  command:
+    cmd: 'acme.sh --install --nocron --home /usr/share --cert-home /etc/acme.sh/certs --config-home /etc/acme.sh'
+    chdir: '/tmp/acme.sh'
+
+- name: Add symbolic link to acme.sh
+  file:
+    src: /usr/share/acme.sh/acme.sh
+    dest: /usr/bin/acme.sh
+    mode: 777
+    state: link
+
+- name: "Add Systemd service"
+  template:
+    src: acme_letsencrypt.service
+    dest: /usr/lib/systemd/system/acme_letsencrypt.service
+
+- name: "Add Systemd timer"
+  template:
+    src: acme_letsencrypt.timer
+    dest: /usr/lib/systemd/system/acme_letsencrypt.timer
+
+- name: Enable acme.sh Systemd timer
+  systemd:
+    state: started
+    daemon_reload: yes
+    name: acme_letsencrypt.timer
