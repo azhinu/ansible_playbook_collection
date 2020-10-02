@@ -42,6 +42,7 @@
 - name: Set SELinux permissive
   command: 'setenforce 0'
   when: ansible_os_family == 'RedHat'
+  ignore_errors: true
 
 - name: Add deploy user
   user:
