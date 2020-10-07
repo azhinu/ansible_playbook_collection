@@ -32,17 +32,21 @@
     state: present
   when: ansible_virtualization_type == "VMware"
 
-- name: Set SELinux permissive
-  lineinfile:
-    path: /etc/selinux/config
-    regexp: '^SELINUX='
-    line: SELINUX=permissive
+# - name: Set SELinux permissive
+#   lineinfile:
+#     path: /etc/selinux/config
+#     regexp: '^SELINUX='
+#     line: SELINUX=permissive
+#   when: ansible_os_family == 'RedHat'
+#
+# - name: Set SELinux permissive
+#   command: 'setenforce 0'
+#   when: ansible_os_family == 'RedHat'
+#   ignore_errors: true
+- selinux:
+    policy: targeted
+    state: permissive
   when: ansible_os_family == 'RedHat'
-
-- name: Set SELinux permissive
-  command: 'setenforce 0'
-  when: ansible_os_family == 'RedHat'
-  ignore_errors: true
 
 - name: Add deploy user
   user:
