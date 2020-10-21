@@ -1,0 +1,26 @@
+- name: Install dnsmasq
+  package:
+    name: dnsmasq
+    state: present
+
+- name: Configure dnsmasq
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    mode: 0644
+
+- name: Enable dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: true
+
+- name: Configure system to use dnsmasq (Centos)
+  shell: 'nmcli con mod {{ ansible_default_ipv4.interface }} ipv4.ignore-auto-dns yes && nmcli con mod {{ ansible_default_ipv4.interface }} ipv4.dns "127.0.0.1" '
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma'
+
+- name: Configure system to use dnsmasq
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    mode: 0644
