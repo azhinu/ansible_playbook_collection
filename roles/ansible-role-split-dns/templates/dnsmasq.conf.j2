@@ -27,18 +27,22 @@ no-poll
 
 # Add other name servers here, with domain specs if they are for
 # non-public domains.
-
 {% for local_resolver in dnsmasq_local_dns %}
-  {% for zone in dnsmasq_local_zone %}
+
+{% for zone in dnsmasq_local_zone %}
 server=/{{ zone }}/{{ local_resolver }}
-  {% endfor %}
+{% endfor %}
 
 # Example of routing PTR queries to nameservers: this will send all
 # address->name queries for 192.168.3/24 to nameserver 10.1.2.3
-  {% for ip in dnsmasq_local_ip %}
+
+{% for ip in dnsmasq_local_ip %}
 server=/{{ ip }}/{{ local_resolver }}
-  {% endfor %}
 {% endfor %}
+
+{% endfor %}
+
+
 
 {% for resolver in dnsmasq_resolver %}
 server={{ resolver }}
