@@ -5,15 +5,15 @@ This role will install dnsmasq, configure it to use different dns for internet a
 
 Vars:
 
-`dnsmasq_local_dns `- Address of local DNS server (no default).
+`dnsmasq_local_dns `- List of local resolvers address (no default).
 
-`dnsmasq_local_zone` - Local network domain zone (no default).
+`dnsmasq_local_zone` - List of local network domain zones (no default).
 
-`dnsmasq_local_ip` - PTR record for LAN IP pool (default 168.192.in-addr.arpa).
+`dnsmasq_local_ip` - List of PTR record for LAN IP pool (default 168.192.in-addr.arpa).
 
 `dnsmasq_resolver` - List of upstream resolvers. By default using  UncensoredDNS servers.
 
-Example:
+Example of lists:
 ```yaml
 dnsmasq_resolver:
   - 130.225.244.166
