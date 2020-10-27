@@ -16,7 +16,7 @@
     dest: "/etc/zabbix/zabbix_agentd.conf"
 
 - name: Add Zabbix port to UFW
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ zabbix_client_port }}"
     proto: tcp
