@@ -29,6 +29,8 @@ harden_linux_required_packages:
   - wget
   - net-tools
 
+harden_linux_required_packages_custom: []
+
 
 harden_linux_sysctl_settings:
   "net.ipv4.tcp_syncookies": 1                    # Enable syn flood protection

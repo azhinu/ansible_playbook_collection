@@ -18,7 +18,7 @@
     name: "{{ item }}"
     state: present
   ignore_errors: true
-  loop: "{{ harden_linux_required_packages }}"
+  loop: "{{ harden_linux_required_packages + harden_linux_required_packages_custom }}"
 
 - name: Ensure UFW is present
   package:

@@ -28,6 +28,14 @@ Ansible role: Harden linux (simplified)
 - wget
 - net-tools
 
+> Добавить пакеты можно при помощи переменной `harden_linux_required_packages_custom`, например:
+
+``` yaml
+harden_linux_required_packages:
+- package1
+- package2
+```
+
 * В случае выполнения на виртуальной машине, будет установлен пакет `open-vm-tools`
 * Добавлен служебный пользователь AWX
 
