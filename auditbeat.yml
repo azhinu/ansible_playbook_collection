@@ -2,4 +2,4 @@
 - hosts: "{{ selected_hosts }}"
   become: yes
   roles:
-  - j91321.auditbeat
+  - ansible-role-auditbeat

@@ -19,3 +19,6 @@
 [submodule "roles/ansible-role-docker"]
 	path = roles/ansible-role-docker
 	url = https://github.com/geerlingguy/ansible-role-docker
+[submodule "roles/ansible-role-auditbeat"]
+	path = roles/ansible-role-auditbeat
+	url = https://github.com/azhinu/ansible-role-auditbeat
