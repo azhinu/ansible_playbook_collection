@@ -1,0 +1,4 @@
+---
+roles:
+# With just the collection name
+- j91321.auditbeat
