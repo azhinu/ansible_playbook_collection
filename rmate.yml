@@ -5,5 +5,5 @@
     - name: Download rmate
       get_url:
         url: https://raw.githubusercontent.com/aurora/rmate/master/rmate
-        dest: /sbin/atom
+        dest: /usr/bin/atom
         mode: '0755'
