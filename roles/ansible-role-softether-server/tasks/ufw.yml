@@ -1,0 +1,52 @@
+- name: "UFW: Allow IP"
+  community.general.ufw:
+    rule: allow
+    src: '{{ item }}'
+  loop: "{{ ufw_allow_ip }}"
+
+- name: "UFW: Disallow SSH"
+  community.general.ufw:
+    rule: deny
+    name: OpenSSH
+
+- name: "UFW: Allow ports"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_allow_ports }}"
+
+- name: "UFS: Check if masquarade exist"
+  lineinfile:
+    dest: /etc/ufw/before.rules
+    line: "-A POSTROUTING -o {{ firewall_internal_interface }} -j MASQUERADE"
+  check_mode: yes
+  register: masquarade_exist
+
+- name: Getting interface name
+  set_fact:
+    firewall_internal_interface: "{{ item }}"
+  when: vars['ansible_'~item].ipv4.address|default('0.0.0.0') == ansible_default_ipv4.address
+  with_items:
+    - "{{ ansible_interfaces }}"
+
+- name: "UFW: Add masquarade"
+  blockinfile:
+  path: /etc/ufw/before.rules
+  insertbefore: "# Don't delete these required lines, otherwise there will be errors"
+  block: |
+    # NAT table rules
+    *nat
+    :POSTROUTING ACCEPT [0:0]
+
+    # Forward traffic through {{ firewall_internal_interface }} - Change to match you out-interface
+    -A POSTROUTING -o {{ firewall_internal_interface }} -j MASQUERADE
+  when: masquarade_exist.changed
+
+- name: "UFW: Enable"
+  community.general.ufw:
+    state: enabled
+
+- name: "UFW: Reload"
+  community.general.ufw:
+    state: reloaded

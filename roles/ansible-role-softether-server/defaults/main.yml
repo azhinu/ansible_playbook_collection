@@ -1,0 +1,32 @@
+softether_version: "4.34-9745-beta"
+# dummy why would download link contain build date?
+softether_version_date: "2020.04.05"
+
+softether_dir: /opt/softether-server
+softether_pass: TMPPASS
+
+softether_user: RDP
+softether_user_serial:
+
+softether_lang: en
+# SoftEther adds 'tap_' automatically.
+softether_tap_name_without_tap: soft
+softether_tap_ip: 10.17.18.1/24
+
+ovpn_port: 48000
+
+firewalld_rules:
+  - ' rule family="ipv4" source address="195.91.254.132/28" accept'
+  - ' rule family="ipv4" source address="94.243.139.46" accept'
+firewalld_allow_ports:
+  - 992/tcp
+  - 48000/udp
+
+
+ufw_allow_ip:
+  - "195.91.254.132/28"
+  - "94.243.139.46"
+
+ufw_allow_ports:
+  - { port: 992, proto: tcp }
+  - { port: 48000, proto: udp }

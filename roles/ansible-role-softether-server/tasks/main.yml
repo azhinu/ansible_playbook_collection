@@ -1,0 +1,172 @@
+---
+- name: Set tap device name variable
+  set_fact:
+    softether_tap_name: "tap_{{ softether_tap_name_without_tap }}"
+
+- name: Configurate build envivroment
+  package:
+    name:
+      - "{{ item.name }}"
+    state: present
+  when: item.when
+  loop:
+    - { name: libssl-dev, when: "{{ ansible_os_family == 'Debian' }}" }
+    - { name: binutils, when: "{{ ansible_os_family == 'RedHat' }}" }
+    - { name: which, when: "{{ ansible_os_family == 'RedHat' }}" }
+    - { name: gcc, when: True }
+    - { name: make, when: True }
+    - { name: dnsmasq, when: True }
+  tags:
+    - soft
+
+- name: Check does SoftEther exist
+  stat:
+    path: "{{ item.path }}"
+  register: "{{ item.register }}"
+  loop:
+    - { path: /opt/softether-server, register: first_run1}
+    - { path: /opt/vpnserver, register: first_run2}
+  tags:
+    - softether
+
+- name: Setting First_run variable
+  set_fact:
+    first_run: True
+  when: not (first_run1.stat.exists or first_run2.stat.exists)
+  tags:
+    - softether
+
+- name: Download SoftEther sources
+  unarchive:
+    src: https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v{{ softether_version }}/softether-vpnserver-v{{ softether_version }}-{{ softether_version_date }}-linux-x64-64bit.tar.gz
+    dest: /tmp
+    remote_src: True
+  when: first_run
+  tags:
+    - softether
+
+- name: SoftEther | make
+  shell: yes 1 | make
+  args:
+    chdir: /tmp/vpnserver
+    creates: '/tmp/vpnserver/vpnserver'
+  when: first_run
+  tags:
+    - softether
+
+- name: Move SoftEther to /opt directory
+  command: 'mv -f /tmp/vpnserver/vpnserver {{ softether_dir }}'
+  when: first_run
+  tags:
+    - softether
+
+- name: 'SoftEther: Set language'
+  lineinfile:
+    dest: '{{ /opt/softether-server }}/lang.config'
+    regexp: '^(en|ja|cn)$'
+    line: '{{ softether_lang }}'
+    create: True
+  tags:
+    - softether
+
+- name: 'SoftEther: Setup sysctl'
+  sysctl:
+    name: 'net.ipv4.ip_forward'
+    value: 1
+    ignoreerrors: True
+    state: present
+    reload: "yes"
+  tags:
+    - softether
+
+- name: 'SoftEther: copy certs'
+  copy:
+    src: "{{ item }}"
+    dest: "{{ softether_dir }}/chain_certs/"
+  loop:
+    - ltca.crt
+    - softether.crt
+    - softether.pem
+  tags:
+    - softether
+
+- name: 'SoftEther: copy config'
+  template:
+    src: infile.j2
+    dest: "{{ softether_dir }}/infile"
+  tags:
+    - softether
+
+- name: 'Systemd: Add service'
+  template:
+    src: softether-server-first-run.service.j2
+    dest: "/lib/systemd/system/softether-server.service"
+  when: first_run
+
+- name: 'Systemd: First_run start'
+  systemd:
+    name: softether-server
+    daemon_reload: yes
+    state: started
+
+- name: "SoftEther: Configure server"
+  shell: ./vpncmd /SERVER localhost /IN:infile
+  args:
+    chdir: '{{ softether_dir }}'
+    creates: '{{ softether_dir }}/result.txt'
+  tags:
+    - softether
+
+- name: 'Systemd: First_run stop'
+  systemd:
+    name: softether-server
+    state: stopped
+  when: first_run
+
+- name: "SoftEther: Disable dDNS"
+  lineinfile:
+    path: "{{ softether_dir }}/vpn_server.config"
+    insertafter: "^\tdeclare DDnsClient\n\t{"
+    regexp: "^\t\tbool Disabled false"
+    line: "\t\tbool Disabled true"
+
+- name: "SoftEther: Disable NAT-T, IPv6Listener, Https info page"
+  lineinfile:
+    path: "{{ softether_dir }}/vpn_server.config"
+    regexp: "^\t\tbool {{ item }} false"
+    line: "\t\tbool {{ item }} true"
+  loop:
+    - DisableNatTraversal
+    - DisableIPv6Listener
+    - DisableJsonRpcWebApi
+
+- name: "Systemd: Create service"
+  template:
+    src: softether-server.service.j2
+    dest: "/lib/systemd/system/softether-server.service"
+
+- name: "Systemd: Start SoftEther service"
+  systemd:
+    name: softether-server
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+
+- name: "DNSMASQ: configure"
+  template:
+    src: dnsmasq.conf.j2
+    dest: "/etc/dnsmasq.conf"
+
+- name: "Systemd: Start DNSMASQ"
+  systemd:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+
+- name: "FIREWALLD"
+  include: firewalld.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: "UFW"
+  include: ufw.yml
+  when: ansible_os_family == 'Debian'

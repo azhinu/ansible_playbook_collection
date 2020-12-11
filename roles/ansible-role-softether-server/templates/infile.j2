@@ -1,0 +1,18 @@
+VpnAzureSetEnable no
+VpnOverIcmpDnsEnable /ICMP:no /DNS:no
+SstpEnable no
+OpenVpnEnable yes /PORTS:{{ ovpn_port }}
+HubCreate servers /PASSWORD:none
+BridgeCreate servers /DEVICE:{{ softether_tap_name_without_tap }} /TAP:yes
+Reboot
+KeepDisable
+ServerCertSet /LOADCERT:chain_certs/softether.crt /LOADKEY:chain_certs/softether.pem
+
+Hub servers
+SetEnumDeny
+LogDisable packet
+CAAdd chain_certs/ltca.crt
+UserCreate {{ softether_user }} /GROUP:none /REALNAME:none /NOTE:none
+UserSignedSet {{ softether_user }} /SERIAL:{{ softether_user_serial }} /CN:none
+HubDel DEFAULT
+ServerPasswordSet {{ softether_pass }}
