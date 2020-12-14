@@ -1,5 +1,0 @@
----
-- hosts: "{{ selected_hosts }}"
-  become: yes
-  roles:
-  - ansible-role-softether-server
