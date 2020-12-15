@@ -104,3 +104,5 @@ harden_linux_sshguard_whitelist:
   - "127.0.0.0/8"
   - "::1/128"
   - "192.168.0.0/16"
+harden_linux_sshguard_threshold: "5"
+harden_linux_sshguard_detection_time: "900"
