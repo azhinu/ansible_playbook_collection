@@ -129,6 +129,16 @@
   loop: "{{ harden_linux_sshguard_whitelist }}"
   when: stat_result.stat.exists
 
+- name: Update Sshguard config
+  lineinfile:
+    dest: /etc/sshguard/sshguard.conf
+    regexp: "^{{ item.param }}"
+    line: "{{ item.value }}"
+    state: present
+  loop:
+    - {param: "THRESHOLD=", value: "THRESHOLD={{ harden_linux_sshguard_threshold }}0"}
+    - {param: "DETECTION_TIME=", value: "DETECTION_TIME={{ harden_linux_sshguard_detection_time }}"}
+
 - name: Restart services
   service:
     name: "{{ item }}"
