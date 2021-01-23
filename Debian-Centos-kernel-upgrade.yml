@@ -1,0 +1,64 @@
+---
+- hosts: "{{selected_hosts}}"
+  become: true
+  roles:
+    - { role: ansible-role-repo-epel, when: ansible_os_family == 'RedHat' }
+    - { role: jnv.debian-backports, when: ansible_os_family == 'Debian' }
+  vars:
+    kernel_version: lt
+  tasks:
+  - name: Centos block
+    block:
+    - name: Import ELRepo key
+      rpm_key:
+        state: present
+        key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+    - name: Install ELRepo
+      yum:
+        name: https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
+        state: present
+
+    - name: Enable ELRepo Kernel
+      command: 'yum-config-manager --enable elrepo-kernel'
+
+    - name: Remove old headers
+      package:
+        name:
+          - kernel-headers
+          - kernel-tools
+          - kernel-tools-libs
+          - kernel-devel
+        state: absent
+
+    - name: "Install Kernel-{{ kernel_version }}"
+      package:
+        name:
+          - "kernel-{{ kernel_version }}"
+          - "kernel-{{ kernel_version }}-headers"
+          - "kernel-{{ kernel_version }}-tools"
+          - "kernel-{{ kernel_version }}-devel"
+          - yum-utils
+        state: latest
+
+    - name: Set new kernel as default
+      command: 'grub2-set-default 0'
+
+    - name: Apply new kernel
+      command: grub2-mkconfig -o /boot/grub2/grub.cfg
+
+    - name: Remove Old kernels
+      command: 'package-cleanup --oldkernels -y'
+    when: ansible_distribution == 'CentOS'
+
+  - name: Ubuntu/Debian kernel upgrade
+    apt:
+      name: "linux-image-{{'amd64' if ansible_distribution == 'Debian' else 'virtual'}}"
+      state: latest
+      default_release: "{{ansible_distribution_release}}-backports"
+    when: ansible_os_family == 'Debian'
+
+
+  - fail:
+      msg: Selected host OS doesnt Debian based of CentOs
+    when: not (ansible_distribution == 'CentOS' or ansible_os_family == 'Debian')
