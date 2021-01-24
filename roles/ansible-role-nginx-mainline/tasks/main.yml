@@ -7,7 +7,7 @@
           - curl
           - gnupg2
           - ca-certificates
-      state: present
+        state: present
     - name: "ADD REPO: Add repo key"
       apt_key:
         url: https://nginx.org/keys/nginx_signing.key
