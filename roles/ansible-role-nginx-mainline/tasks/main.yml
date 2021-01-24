@@ -11,7 +11,7 @@
     - name: "ADD REPO: Add repo key"
       apt_key:
         url: https://nginx.org/keys/nginx_signing.key
-        state: preasent
+        state: present
     - name: "Add NGiNX"
       apt_repository:
         repo: "deb http://nginx.org/packages/mainline/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} nginx"
@@ -45,3 +45,27 @@
     - { src: nginx.conf, dest: /etc/nginx/nginx.conf }
     - { src: tweaks.conf, dest: /etc/nginx/conf.d/tweaks.conf }
     - { src: default.conf, dest: /etc/nginx/conf.d/default.conf }
+
+- name: Generate dummy certificate
+  shell: |
+    umask 077
+
+    answers() {
+      echo --
+      echo SomeState
+      echo SomeCity
+      echo SomeOrganization
+      echo SomeOrganizationalUnit
+      echo localhost.localdomain
+      echo root@localhost.localdomain
+    }
+
+    for target in /etc/ssl/dummy-cert.pem ; do
+      PEM1=`/bin/mktemp /tmp/openssl.XXXXXX`
+      PEM2=`/bin/mktemp /tmp/openssl.XXXXXX`
+      answers | /usr/bin/openssl req -newkey rsa:2048 -keyout $PEM1 -nodes -x509 -days 365 -out $PEM2 2> /dev/null
+      cat $PEM1 >  ${target}
+      echo ""   >> ${target}
+      cat $PEM2 >> ${target}
+      rm -f $PEM1 $PEM2
+    done
