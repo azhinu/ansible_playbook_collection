@@ -1,7 +1,7 @@
 ---
 - name: Add repo (Debian)
   apt:
-    deb: "https://repo.zabbix.com/zabbix/5.0/{{ ansible_facts['distribution']|lower }}/pool/main/z/zabbix-release/zabbix-release_5.0-1+{{ ansible_facts['distribution_release']|lower }}_all.deb"
+    deb: "https://repo.zabbix.com/zabbix/5.2/{{ ansible_facts['distribution']|lower }}/pool/main/z/zabbix-release/zabbix-release_5.2-1+{{ ansible_facts['distribution_release']|lower }}_all.deb"
     update_cache: true
     state: present
 
