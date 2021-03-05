@@ -2,8 +2,10 @@
 - name: Add repo (Debian)
   apt:
     deb: "https://repo.zabbix.com/zabbix/5.2/{{ ansible_facts['distribution']|lower }}/pool/main/z/zabbix-release/zabbix-release_5.2-1+{{ ansible_facts['distribution']|lower }}{{ ansible_facts['distribution_version'] }}_all.deb"
+    state: latest
+- name: Update APT cache
+  apt:
     update_cache: true
-    state: present
 
 - name: Install Zabbix agent
   package:
@@ -22,8 +24,14 @@
     proto: tcp
   when: add_firewall_rule | bool
 
+- name: Allow all access from RFC1918 networks to this host
+  community.general.ufw:
+    rule: allow
+    src: "{{ zabbix_server_ip }}"
+  when: add_firewall_rule | bool
+
 - name: "Start Zabbix agent"
   service:
     name: zabbix-agent
     state: started
-    enabled: yes
+    enabled: true
