@@ -24,11 +24,12 @@
     proto: tcp
   when: add_firewall_rule | bool
 
-- name: Allow all access from RFC1918 networks to this host
+- name: Allow all access from Zabbix server to this host
   community.general.ufw:
     rule: allow
     src: "{{ zabbix_server_ip }}"
   when: add_firewall_rule | bool
+
 
 - name: "Start Zabbix agent"
   service:
