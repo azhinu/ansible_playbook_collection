@@ -1,0 +1,93 @@
+- hosts: "{{ selected_hosts }}"
+  become: true
+  vars:
+    swap_is_last: false
+    lvm_found: false
+    disk_id: 'sda'
+    vg_name: ''
+    lv_name: ''
+  tasks:
+
+  - name: Rescan disks
+    shell: "echo 1 > /sys/class/block/sda/device/rescan"
+
+  - name: Install Parted
+    package:
+      name: parted
+      state: present
+  - name: Read device information
+    community.general.parted:
+      device: "/dev/{{ disk_id }}"
+      unit: MiB
+    register: disk_info
+
+  - name: Print partition list
+    debug:
+      msg: "{{ disk_info.partitions }}"
+
+  - name: Set LVM fact
+    set_fact:
+      lvm_found: true
+    when: item.fstype == "" and (item.flags == ["lvm"] or item.flags == [])
+    loop: "{{ disk_info.partitions }}"
+
+  - name: Check LVM exist
+    debug:
+      msg: LVM Found!
+    when: lvm_found
+
+  - name: Fail
+    fail:
+      msg: "VG or LV not defined"
+    when: lvm_found and (vg_name == '' or lv_name == '')
+
+  - name: Set swap status
+    set_fact:
+      swap_is_last: true
+    when: item.fstype == "linux-swap(v1)" and index|int <= disk_info.partitions|length|int
+    loop: "{{ disk_info.partitions }}"
+    loop_control:
+      index_var: index
+
+  - name: Check if Swap is last partition
+    fail:
+      msg: Swap if the last partition! Can't continue.
+    when: swap_is_last
+
+  - name: Fix GPT table
+    shell: 'echo -e "\nw\n\ny\ny" | gdisk /dev/{{ disk_id }}'
+    when: disk_info.disk.table == "gpt"
+
+  - name: Resize Non LVM
+    block:
+    - name: Extend an existing partition to fill all available space
+      shell: 'parted /dev/{{ disk_id }} resizepart {{ disk_info.partitions|length }} yes 100%'
+
+    - name: Expand non LVM FS
+      shell: 'resize2fs /dev/{{ disk_id }}{{ disk_info.partitions|length }}'
+    when: not lvm_found
+
+
+  - name: Start LVM formating!
+    block:
+      - name: Extend an existing partition to fill all available space
+        community.general.parted:
+          device: "/dev/{{ disk_id }}"
+          number: "{{ disk_info.partitions|length }}"
+          label: "{{ disk_info.disk.table }}"
+          part_end: "100%"
+          resize: true
+          state: present
+
+      - name: Resize PV
+        community.general.lvg:
+          pvs: "/dev/{{ disk_id }}{{ disk_info.partitions|length }}"
+          vg: "{{ vg_name }}"
+          pvresize: true
+      - name: Resize LV
+        community.general.lvol:
+          vg: "{{ vg_name }}"
+          lv: "{{ lv_name }}"
+          size: "+100%FREE"
+          resizefs: true
+    when: lvm_found
