@@ -1,0 +1,17 @@
+- hosts: "{{selected_hosts}}"
+  become: true
+  vars:
+    disk_id: ''
+  tasks:
+    - name: Extend an existing partition to fill all available space
+      community.general.parted:
+        device: "/dev/{{ disk_id }}"
+        number: "{{ [disk_id]_info.partitions | length }}"
+        part_end: "100%"
+        resize: true
+        state: present
+      when: disk_id != ''
+    - name: Fail
+      debug:
+        msg: "Disk ID doesn't defined"
+      when: disk_id == ''
