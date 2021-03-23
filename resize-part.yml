@@ -44,10 +44,8 @@
   - name: Set swap status
     set_fact:
       swap_is_last: true
-    when: item.fstype == "linux-swap(v1)" and index|int <= disk_info.partitions|length|int
+    when: item.fstype == "linux-swap(v1)" and item.num|int >= disk_info.partitions|length|int
     loop: "{{ disk_info.partitions }}"
-    loop_control:
-      index_var: index
 
   - name: Check if Swap is last partition
     fail:
