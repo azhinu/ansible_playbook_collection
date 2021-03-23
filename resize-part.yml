@@ -1,3 +1,5 @@
+---
+#Readme: https://wiki.mycbl.ru/books/ansible/page/ansible-rol-rasshirenie-poslednego-razdela
 - hosts: "{{ selected_hosts }}"
   become: true
   vars:
