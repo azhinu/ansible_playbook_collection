@@ -28,7 +28,7 @@
 
 - name: Install open-vm-tools
   package:
-    name: open-vm-tools
+    name: "{{ 'os-cloudguest-vmware' if ansible_os_family == 'ClearLinux' else 'open-vm-tools' }}"
     state: present
   when: ansible_virtualization_type == "VMware"
 
@@ -54,7 +54,7 @@
     password: "{{ harden_linux_deploy_user_password }}"
     uid: "{{ harden_linux_deploy_user_uid }}"
     shell: "{{ harden_linux_deploy_user_shell }}"
-    groups: "{{ 'wheel' if ( ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo' if ansible_os_family == 'Debian'}}"
+    groups: "{{ 'wheel' if ( ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo' }}"
 
 - name: Add authorized keys for deploy user
   authorized_key:
