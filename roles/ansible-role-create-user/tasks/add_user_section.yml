@@ -24,7 +24,7 @@
 - name: Add User to sudoers
   user:
     name: "{{ item.username}}"
-    groups: "{{ 'wheel' if (ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo' if ansible_os_family == 'Debian'}}"
+    groups: "{{ 'wheel' if (ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo'}}"
     append: true
   when: item.use_sudo|default(False)
 
