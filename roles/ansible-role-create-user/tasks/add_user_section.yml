@@ -21,6 +21,12 @@
   command: "passwd -e {{ item.username }}"
   when: (item.password is not defined and (add_user.changed or item.update_password|default('on_create') == 'always' )) or reset_all_passwords|default(False)|bool
 
+- name: Ensure sudo group exists
+  group:
+    name: "{{ 'wheel' if (ansible_os_family == 'RedHat' or ansible_os_family == 'Sangoma') else 'sudo'}}"
+    state: present
+  when: item.use_sudo|default(False)
+
 - name: Add User to sudoers
   user:
     name: "{{ item.username}}"
