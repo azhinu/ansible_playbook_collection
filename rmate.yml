@@ -9,4 +9,4 @@
         remote_src: yes
         extra_opts:
           - --transform
-          - s/^rmate/atom/
+          - s/target/x86_64-unknown-linux-gnu/release/rmateatom/
