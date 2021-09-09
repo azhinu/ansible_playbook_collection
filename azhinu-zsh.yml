@@ -1,4 +1,4 @@
-#syntax=ansible.source
+#syntax=source.ansible
 ---
 - hosts: "{{ selected_hosts }}"
   become: true
