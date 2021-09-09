@@ -1,0 +1,77 @@
+# My Atom syntax selector
+# syntax=source.ansible
+---
+
+- name: Update package cache
+  package:
+    update_cache: yes
+  when: ansible_os_family != 'Darwin'
+
+- name: Install zsh, git, wget
+  package:
+    name:
+      - zsh
+      - git
+      - wget
+    state: present
+  # brew don't work from root user on macOS
+  when: not (zsh_user == 'root' and ansible_os_family == 'Darwin')
+
+- name: Check Sheldon installed
+  command: which sheldon
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  register: zsh_register_fzf_command
+
+- name: Get latest Sheldon release
+  community.general.github_release:
+    user: rossmacarthur
+    repo: sheldon
+    action: latest_release
+  register: sheldon
+
+
+
+- name: Check fzf installed
+  command: which fzf
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  register: zsh_register_fzf_command
+
+- name: Set zsh_fzf_path to /usr/local/bin
+  set_fact:
+    zsh_fzf_path: /usr/local/bin
+  changed_when: false
+  when: zsh_shared
+
+- name: Set zsh_fzf_path_absolute
+  set_fact:
+    zsh_fzf_path_absolute: "{{ zsh_fzf_path | replace('$HOME', '~' + zsh_user) }}"
+  changed_when: false
+
+- name: Ensure users home binary folder is present
+  file:
+    path: "{{ zsh_fzf_path_absolute }}"
+    owner: "{{ zsh_user }}"
+    group: "{{ zsh_user_group }}"
+    mode: u=rwx,g=rwx,o=rx
+    state: directory
+  when: not zsh_shared
+
+- name: "Download fzf to {{ zsh_fzf_path_absolute }}"
+  unarchive:
+    src: "{{ zsh_fzf_url }}"
+    dest: "{{ zsh_fzf_path_absolute }}"
+    remote_src: yes
+    creates: "{{ zsh_fzf_path_absolute }}/fzf"
+  when: zsh_register_fzf_command.rc == 1
+
+- name: Set directory permissions
+  file:
+    name: "{{ zsh_antigen_path }}"
+    owner: "{{ zsh_user }}"
+    group: "{{ zsh_user_group }}"
+    recurse: yes
+  changed_when: false
