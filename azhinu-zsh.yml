@@ -3,4 +3,4 @@
 - hosts: "{{ selected_hosts }}"
   become: true
   roles:
-  - ansible-azhinu-ssh
+  - ansible-azhinu-zsh

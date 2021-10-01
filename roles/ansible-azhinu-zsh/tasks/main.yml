@@ -1,5 +1,5 @@
-# My Atom syntax selector
-# syntax=source.ansible
+#My Atom syntax selector
+#syntax=source.ansible
 ---
 
 - name: Update package cache
@@ -13,65 +13,42 @@
       - zsh
       - git
       - wget
+      - fzf
     state: present
-  # brew don't work from root user on macOS
-  when: not (zsh_user == 'root' and ansible_os_family == 'Darwin')
+  #Brew don't work from root user on macOS
+  when: not (ansible_user == 'root' and ansible_os_family == 'Darwin')
 
+#Start sheldon block
+#Which return rc 0 when command exists.
 - name: Check Sheldon installed
   command: which sheldon
   changed_when: false
   failed_when: false
   check_mode: no
-  register: zsh_register_fzf_command
+  register: command_not_exist
 
-- name: Get latest Sheldon release
-  community.general.github_release:
-    user: rossmacarthur
-    repo: sheldon
-    action: latest_release
-  register: sheldon
+# Disable becouse of pip module is required on remote host.
+# - name: Get latest Sheldon release
+#   community.general.github_release:
+#     user: rossmacarthur
+#     repo: sheldon
+#     action: latest_release
+#   register: sheldon
+#   when: command_not_exist.rc | bool
 
-
-
-- name: Check fzf installed
-  command: which fzf
-  changed_when: false
-  failed_when: false
-  check_mode: no
-  register: zsh_register_fzf_command
-
-- name: Set zsh_fzf_path to /usr/local/bin
-  set_fact:
-    zsh_fzf_path: /usr/local/bin
-  changed_when: false
-  when: zsh_shared
-
-- name: Set zsh_fzf_path_absolute
-  set_fact:
-    zsh_fzf_path_absolute: "{{ zsh_fzf_path | replace('$HOME', '~' + zsh_user) }}"
-  changed_when: false
-
-- name: Ensure users home binary folder is present
-  file:
-    path: "{{ zsh_fzf_path_absolute }}"
-    owner: "{{ zsh_user }}"
-    group: "{{ zsh_user_group }}"
-    mode: u=rwx,g=rwx,o=rx
-    state: directory
-  when: not zsh_shared
-
-- name: "Download fzf to {{ zsh_fzf_path_absolute }}"
+- name: Get Sheldon
   unarchive:
-    src: "{{ zsh_fzf_url }}"
-    dest: "{{ zsh_fzf_path_absolute }}"
+    src: "https://github.com/rossmacarthur/sheldon/releases/download/{{ sheldon_tag }}/sheldon-{{ sheldon_tag }}-x86_64-{{ 'apple-darwin' if ansible_os_family == 'Darwin' else 'unknown-linux-musl'}}.tar.gz"
+    dest: /usr/local/bin/
+    mode: 0755
     remote_src: yes
-    creates: "{{ zsh_fzf_path_absolute }}/fzf"
-  when: zsh_register_fzf_command.rc == 1
+    creates: /usr/local/bin/sheldon
+  when: command_not_exist.rc | bool
+#End sheldon block
 
-- name: Set directory permissions
-  file:
-    name: "{{ zsh_antigen_path }}"
-    owner: "{{ zsh_user }}"
-    group: "{{ zsh_user_group }}"
-    recurse: yes
-  changed_when: false
+- name: Add user settings
+  include_tasks: user_setup.yml
+  when: users is defined
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user

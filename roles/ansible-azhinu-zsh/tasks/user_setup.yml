@@ -1,0 +1,47 @@
+#syntax=source.ansible
+- name: "Copy dotfiles to homedir"
+  copy:
+    src: "{{ file }}"
+    dest: "/home/{{ user }}/{{ file | basename }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+    force: false
+  with_fileglob:
+    - '.*'
+  loop_control:
+    loop_var: file
+
+- name: Create sheldon dir
+  file:
+    path: /home/{{ user }}/.sheldon
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0755'
+
+- name: "Copy sheldon config to homedir"
+  copy:
+    src: .sheldon/plugins.toml
+    dest: "/home/{{ user }}/.sheldon/plugins.toml"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+    force: false
+    directory_mode: true
+
+- name: "Template dotfiles to homedir"
+  ansible.builtin.template:
+    src: "{{ file }}"
+    dest: /home/{{ user }}/{{ file | basename |  regex_replace('\.j2$', '') }}
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
+  with_fileglob: 'templates/.*'
+  loop_control:
+    loop_var: file
+
+- name: Change default shell
+  user:
+    name: "{{ user }}"
+    shell: "{{ '/usr/local/bin/zsh' if ansible_os_family == 'Darwin' else '/bin/zsh' }}"
