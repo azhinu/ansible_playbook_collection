@@ -3,14 +3,14 @@
 This role will install ZSH as Shell FZF for autocompletion and Sheldon as plugin manager.
 
 Plugins list:
-* sorin-ionescu/prezto — Completion, suggesion and more.
+* sorin-ionescu/prezto — Completion, suggestion and more.
 * romkatv/powerlevel10k — Famous ZSH prompt.
-* anatolykopyl/sshukh — Use sshukh instead of ssh to ignore server fingerpring mismatch.
+* anatolykopyl/sshukh — Use sshukh instead of ssh to ignore server fingerprint mismatch.
 * lildude/fzf-prezto — FZF plugin to allow fuzzy autocompletion and history search.
 * zdharma/fast-syntax-highlighting — Syntax highlighting.
 
 ## Pipeline
-1. Install Git, Wget (Required by sheldon), FZF.
+1. Install Git, wget (Required by sheldon), FZF.
 2. Install Sheldon binaries from Github.
 3. Add dotfiles for selected users
 4. Change Shell to ZSH for selected users.
