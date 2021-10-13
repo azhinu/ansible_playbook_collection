@@ -18,12 +18,8 @@ harden_linux_required_packages:
   - curl
   - bash-completion
   - bash-completion-extras
-  - gcc
-  - htop
-  - mtr
-  - tree
   - wget
-  - net-tools
+  - tar
 
 harden_linux_required_packages_custom: []
 

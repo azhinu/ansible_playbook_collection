@@ -2,11 +2,17 @@
 - hosts: "{{selected_hosts}}"
   become: true
   tasks:
+    # Commented rust version
+    # - name: Download rmate
+    #   ansible.builtin.unarchive:
+    #     src: https://github.com/spamwax/rmate-rs/releases/download/v1.0.3/rmate_x86_64-unknown-linux-gnu.tar.gz
+    #     dest: /usr/local/bin/
+    #     remote_src: true
+    #     extra_opts:
+    #       - --transform
+    #       - s/^target\/x86_64-unknown-linux-gnu\/release\/rmate/atom/
     - name: Download rmate
-      ansible.builtin.unarchive:
-        src: https://github.com/spamwax/rmate-rs/releases/download/v1.0.3/rmate_x86_64-unknown-linux-gnu.tar.gz
-        dest: /usr/local/bin/
-        remote_src: true
-        extra_opts:
-          - --transform
-          - s/^target\/x86_64-unknown-linux-gnu\/release\/rmate/atom/
+      get_url:
+        url: https://raw.githubusercontent.com/aurora/rmate/master/rmate
+        dest: /usr/local/bin/atom
+        mode: '0755'

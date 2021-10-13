@@ -16,7 +16,7 @@
       - fzf
     state: present
   #Brew don't work from root user on macOS
-  when: not (ansible_user == 'root' and ansible_os_family == 'Darwin')
+  when: not (ansible_user_id == 'root' and ansible_os_family == 'Darwin')
 
 #Start sheldon block
 #Which return rc 0 when command exists.

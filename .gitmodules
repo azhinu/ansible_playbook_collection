@@ -3,7 +3,7 @@
 	url = https://github.com/ryandaniels/ansible-role-create-users
 [submodule "roles/ansible-role-repo-epel"]
 	path = roles/ansible-role-repo-epel
-	url = https://github.com/geerlingguy/ansible-role-repo-epel
+	url = https://github.com/azhinu/ansible-role-repo-epel
 [submodule "roles/ansible-role-pip"]
 	path = roles/ansible-role-pip
 	url = https://github.com/geerlingguy/ansible-role-pip
