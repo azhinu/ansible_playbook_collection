@@ -1,0 +1,41 @@
+#syntax=source.ansible
+- name: Get latest release
+  uri:
+    url: "https://api.github.com/repos/{{ utility.github_repo }}/releases/latest"
+    body_format: json
+  register: github_response
+
+- name: Set download link
+  set_fact:
+    github_package_name: "{{ github_response.json.assets | json_query(jq) | join }}"
+  vars:
+    jq: "[?contains(browser_download_url,'{{ utility.asset_name }}')].browser_download_url"
+
+- name: Download link
+  debug:
+    var: github_package_name
+- name: Download app (archive)
+  unarchive:
+    src: "{{ github_package_name }}"
+    dest: /usr/local/bin/
+    mode: 0755
+    remote_src: True
+    creates: "/usr/local/bin/{{ utility.name }}"
+    extra_opts: "{{ utility.extra_opts | default([]) }}"
+  when: utility.is_archive | default(False)
+
+- name: Download app (binary)
+  get_url:
+    url: "{{ github_package_name }}"
+    dest: "/usr/local/bin/{{ utility.name }}"
+    mode: 0755
+    force: False
+  when: not utility.is_archive | default(False)
+
+- name: Add alias
+  lineinfile:
+    path: /etc/profile.d/modern-unix.sh
+    regexp: '^alias {{ utility.alias }}'
+    line: "alias {{ utility.alias }}"
+    create: True
+  when: utility.alias is defined

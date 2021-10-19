@@ -1,0 +1,35 @@
+# This task will return a link to latest release asset.
+# Playbook example:
+# - hosts: 127.0.0.1
+#   connection: local
+#   vars:
+#     github_repo: "dalance/procs" -- user and repo names
+#     github_package_name: "mac" -- Part of asset name that will be searching
+#   tasks:
+#   - name: Get latest asset
+#     include_tasks: get-github-release-task.yml
+#   - name: Return
+#     debug:
+#       var: github_package_name
+# Task return {{ github_package_name }} with link to download asset.
+
+#syntax=source.ansible
+---
+- name: Get assets
+  uri:
+    url: "https://api.github.com/repos/{{ github_repo }}/releases/latest"
+    body_format: json
+  register: github_response
+
+- name: Set fact
+  set_fact:
+    github_package_name: "{{ github_response.json.assets | json_query(jq) }}"
+  vars:
+    jq: "[?contains(browser_download_url,'{{ github_package_name }}')].browser_download_url"
+
+#Return only tag name in {{ github_response.json.tag_name }}
+# - name: Get assets
+#   uri:
+#     url: "https://api.github.com/repos/{{ github_repo }}/releases/latest"
+#     body_format: json
+#   register: github_response

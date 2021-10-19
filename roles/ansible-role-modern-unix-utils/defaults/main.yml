@@ -1,0 +1,67 @@
+#syntax=source.ansible
+
+modern_unix_utils_list:
+  - name: bat
+    install: True
+    alias: "cat='/usr/local/bin/bat'"
+    github_repo: sharkdp/bat
+    asset_name: x86_64-unknown-linux-musl
+    is_archive: True
+    extra_opts:
+      - --strip=1
+      - --no-anchored
+      - bat
+  - name: ctop
+    install: True
+    github_repo: bcicen/ctop
+    asset_name: linux-amd64
+    is_archive: False
+
+  - name: procs
+    install: true
+    alias: "ps='/usr/local/bin/procs'"
+    github_repo: dalance/procs
+    asset_name: lnx
+    is_archive: True
+
+
+  - name: lsd
+    install: True
+    alias: "ls='/usr/local/bin/lsd'"
+    github_repo: Peltoche/lsd
+    asset_name: x86_64-unknown-linux-musl
+    is_archive: True
+    extra_opts:
+      - --strip=1
+      - --no-anchored
+      - lsd
+
+  - name: duf
+    install: True
+    alias: "df='/usr/local/bin/duf'"
+    github_repo: muesli/duf
+    asset_name: linux_arm64.tar.gz
+    is_archive: True
+    extra_opts:
+      - --no-anchored
+      - duf
+
+  - name: btm
+    install: True
+    alias: "top='/usr/local/bin/btm -b'"
+    github_repo: ClementTsang/bottom
+    asset_name: bottom_x86_64-unknown-linux-musl.tar.gz
+    is_archive: True
+    extra_opts:
+      - --no-anchored
+      - btm
+
+  - name: gdu
+    install: True
+    alias: "du='/usr/local/bin/gdu'"
+    github_repo: dundee/gdu
+    asset_name: gdu_linux_arm64
+    is_archive: True
+    extra_opts:
+      - --transform
+      - s/^gdu_linux_arm64/gdu/

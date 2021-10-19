@@ -1,0 +1,7 @@
+#syntax=source.ansible
+- name: Install block
+  include_tasks: install.yml
+  when: utility.install | default(True)
+  loop: "{{ modern_unix_utils_list }}"
+  loop_control:
+    loop_var: utility
