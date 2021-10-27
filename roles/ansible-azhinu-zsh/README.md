@@ -3,6 +3,7 @@
 This role will install ZSH as Shell FZF for autocompletion and Sheldon as plugin manager.
 
 Plugins list:
+
 * `sorin-ionescu/prezto` — Completion, suggestion and more.
 * `romkatv/powerlevel10k` — Famous ZSH prompt.
 * `anatolykopyl/sshukh` — Use sshukh instead of ssh to ignore server fingerprint mismatch.
@@ -10,6 +11,7 @@ Plugins list:
 * `zdharma/fast-syntax-highlighting` — Syntax highlighting.
 
 ## Pipeline
+
 1. Install Git, wget (Required by sheldon), FZF.
 2. Install Sheldon binaries from Github.
 3. Add dotfiles for selected users
@@ -26,5 +28,6 @@ sheldon_tag: 0.6.4 #Sheldon release
 ```
 
 ## Notes
+
 We can use `github_release` module to get latest release but it required github3.py module on target host.
 Sheldon not used to init Prezto because it has unstable behavior
