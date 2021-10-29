@@ -7,6 +7,8 @@ For example:
 
 Variables:
 ``` yaml
+github_token: "token your-token" #Github personal access token. Use var as "token [your token]" to increase API requests limit or leave empty for default 60 requests limit.
+
 - name: lsd # Name of binary.
   install: True #Optional. By default `True`.
   alias: "ls='/usr/local/bin/lsd'" #Optional. Used to create alias. In form of alias {{ alias }}
