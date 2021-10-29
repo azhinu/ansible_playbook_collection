@@ -34,7 +34,7 @@ modern_unix_utils_list:
     install: True
     alias: "df='/usr/local/bin/duf'"
     github_repo: muesli/duf
-    asset_name: linux_amd64.tar.gz
+    asset_name: linux_x86_64.tar.gz
     is_archive: True
     extra_opts:
       - --no-anchored
