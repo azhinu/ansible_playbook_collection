@@ -1,4 +1,10 @@
 #syntax=source.ansible
+- name: Remove old installation
+  file:
+    path: "/usr/local/bin/{{ utility.name }}"
+    state: absent
+  when: upgrade
+
 - name: Get latest release
   uri:
     url: "https://api.github.com/repos/{{ utility.github_repo }}/releases/latest"

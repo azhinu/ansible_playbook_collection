@@ -8,6 +8,7 @@ For example:
 Variables:
 ``` yaml
 github_token: "token your-token" #Github personal access token. Use var as "token [your token]" to increase API requests limit or leave empty for default 60 requests limit.
+upgrade: True #Remove binaries before downloading. Default 'False'
 
 - name: lsd # Name of binary.
   install: True #Optional. By default `True`.

@@ -1,5 +1,6 @@
 #syntax=source.ansible
 github_token: ""
+upgrade: False
 
 modern_unix_utils_list:
   - name: bat
