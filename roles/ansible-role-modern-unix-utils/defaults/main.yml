@@ -33,7 +33,7 @@ modern_unix_utils_list:
     install: True
     alias: "df='/usr/local/bin/duf'"
     github_repo: muesli/duf
-    asset_name: linux_arm64.tar.gz
+    asset_name: linux_amd64.tar.gz
     is_archive: True
     extra_opts:
       - --no-anchored
@@ -43,15 +43,15 @@ modern_unix_utils_list:
     install: True
     alias: "du='/usr/local/bin/gdu'"
     github_repo: dundee/gdu
-    asset_name: gdu_linux_arm64
+    asset_name: gdu_linux_amd64
     is_archive: True
     extra_opts:
       - --transform
-      - s/^gdu_linux_arm64/gdu/
+      - s/^gdu_linux_amd64/gdu/
 
   - name: procs
     install: true
-    alias: "ps='/usr/local/bin/procs'"
+    alias: "ps='/usr/local/bin/procs -p disable'"
     github_repo: dalance/procs
     asset_name: lnx
     is_archive: True
@@ -59,7 +59,7 @@ modern_unix_utils_list:
 
   - name: lsd
     install: True
-    alias: "ls='/usr/local/bin/lsd'"
+    alias: "ls='/usr/local/bin/lsd -la'"
     github_repo: Peltoche/lsd
     asset_name: x86_64-unknown-linux-musl
     is_archive: True
