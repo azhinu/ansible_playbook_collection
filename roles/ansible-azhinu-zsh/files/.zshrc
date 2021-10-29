@@ -14,7 +14,7 @@ SAVEHIST=1000
 $(which lolcat > /dev/null) && alias cat='lolcat'
 $(which duf > /dev/null) && alias df='duf' || alias df='df -h'
 $(which procs > /dev/null) && alias ps='procs -p disable' || alias ps='ls -GFhl'
-$(which lsd > /dev/null) && alias ls='lsd' || alias ps='ps aux'
+$(which lsd > /dev/null) && alias ls='lsd -l' || alias ps='ps aux'
 
 #Start sheldon end plugins
 eval "$(sheldon source)"
