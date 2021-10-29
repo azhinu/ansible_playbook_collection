@@ -6,7 +6,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: '0644'
-    force: false
+    force: "{{ force_copy_dotfiles }}"
   with_fileglob:
     - '.*'
   loop_control:

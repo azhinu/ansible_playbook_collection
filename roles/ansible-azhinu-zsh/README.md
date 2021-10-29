@@ -25,6 +25,7 @@ users: #Users to apply ZSH dotfiles and shell
   - user2
 
 sheldon_tag: 0.6.4 #Sheldon release
+force_copy_dotfiles: True #Override ZSH dotfiles
 ```
 
 ## Notes
