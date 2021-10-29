@@ -60,7 +60,7 @@ modern_unix_utils_list:
 
   - name: lsd
     install: True
-    alias: "ls='/usr/local/bin/lsd -la'"
+    alias: "ls='/usr/local/bin/lsd -l'"
     github_repo: Peltoche/lsd
     asset_name: x86_64-unknown-linux-musl
     is_archive: True
