@@ -3,3 +3,4 @@ roles:
 # With just the collection name
 - j91321.auditbeat
 - jnv.debian-backports
+- cloudalchemy.node_exporter

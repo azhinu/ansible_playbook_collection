@@ -1,0 +1,6 @@
+#syntax=source.ansible
+---
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - cloudalchemy.node_exporter
