@@ -3,6 +3,8 @@
   uri:
     url: "https://api.github.com/repos/{{ utility.github_repo }}/releases/latest"
     body_format: json
+    headers:
+      Authorization: "{{ github_token }}"
   register: github_response
 
 - name: Set download link
@@ -35,7 +37,7 @@
 - name: Add alias
   lineinfile:
     path: /etc/profile.d/modern-unix.sh
-    regexp: '^alias {{ utility.alias }}'
     line: "alias {{ utility.alias }}"
     create: True
+    mode: 0644
   when: utility.alias is defined

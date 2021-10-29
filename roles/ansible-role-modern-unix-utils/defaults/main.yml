@@ -1,4 +1,5 @@
 #syntax=source.ansible
+github_token: ""
 
 modern_unix_utils_list:
   - name: bat

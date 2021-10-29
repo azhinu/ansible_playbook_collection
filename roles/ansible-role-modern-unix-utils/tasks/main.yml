@@ -5,3 +5,16 @@
   loop: "{{ modern_unix_utils_list }}"
   loop_control:
     loop_var: utility
+
+- name: Check if ZSH profile exists
+  stat:
+    path: /etc/zsh/zprofile
+  register: check
+
+- name: Add alias
+  lineinfile:
+    path: /etc/zsh/zprofile
+    line: "source /etc/profile.d/modern-unix.sh"
+    create: True
+    mode: 0644
+  when: utility.alias is defined and check.stat.exists
