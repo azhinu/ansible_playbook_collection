@@ -9,7 +9,7 @@
 - name: Check if aliases used
   stat:
     path: /etc/profile.d/modern-unix.sh
-  register: check-aliases
+  register: check_aliases
 
 - name: Check if ZSH profile exists
   stat:
@@ -22,4 +22,4 @@
     line: "source /etc/profile.d/modern-unix.sh"
     create: True
     mode: 0644
-  when: check-aliases.stat.exists and check.stat.exists
+  when: check_aliases.stat.exists and check.stat.exists

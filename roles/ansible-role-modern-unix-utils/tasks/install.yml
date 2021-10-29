@@ -37,6 +37,7 @@
 - name: Add alias
   lineinfile:
     path: /etc/profile.d/modern-unix.sh
+    regexp: "{{ utility.name }}"
     line: "alias {{ utility.alias }}"
     create: True
     mode: 0644
