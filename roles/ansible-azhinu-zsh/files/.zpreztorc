@@ -34,11 +34,11 @@ zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
-  'history' \
   'spectrum' \
   'completion' \
-  'history-substring-search' \
-
+  'history-substring-search'
+# 'history' \
+#  'utility' \
 #
 # Autosuggestions
 #
