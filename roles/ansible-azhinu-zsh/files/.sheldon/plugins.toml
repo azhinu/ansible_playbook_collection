@@ -26,8 +26,7 @@ github = 'anatolykopyl/sshukh'
 github = 'lildude/fzf-prezto'
 
 [plugins.fast-syntax-highlighting]
-github = 'zdharma/fast-syntax-highlighting'
-
+github = 'zdharma-continuum/fast-syntax-highlighting'
 # For example:
 #
 # [plugins.base16]
