@@ -40,6 +40,15 @@ modern_unix_utils_list:
       - --no-anchored
       - duf
 
+  - name: fd
+    install: True
+    github_repo: sharkdp/fd
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: True
+    extra_opts:
+      - --no-anchored
+      - fd
+
   - name: gdu
     install: True
     alias: "du='/usr/local/bin/gdu'"
@@ -68,3 +77,12 @@ modern_unix_utils_list:
       - --strip=1
       - --no-anchored
       - lsd
+
+  - name: ripgrep
+    install: True
+    github_repo: BurntSushi/ripgrep
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: True
+    extra_opts:
+      - --no-anchored
+      - rg
