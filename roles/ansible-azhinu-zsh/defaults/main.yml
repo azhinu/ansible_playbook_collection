@@ -1,4 +1,4 @@
 #syntax=source.ansible
-sheldon_tag: 0.6.4 #Sheldon version to download
+sheldon_tag: 0.6.6 #Sheldon version to download
 users: [] #Users to apply ZSH dotfiles and shell
 force_copy_dotfiles: false #If 'True' will override old ZSH dotfiles.

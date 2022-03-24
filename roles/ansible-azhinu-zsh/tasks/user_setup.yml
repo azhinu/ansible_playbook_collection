@@ -22,8 +22,8 @@
 
 - name: "Copy sheldon config to homedir"
   copy:
-    src: .sheldon/plugins.toml
-    dest: "/home/{{ user }}/.sheldon/plugins.toml"
+    src: .sheldon/
+    dest: "/home/{{ user }}/.sheldon/"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: '0644'

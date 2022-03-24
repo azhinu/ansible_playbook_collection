@@ -10,26 +10,10 @@ HISTSIZE=1000
 SAVEHIST=1000
 # End of lines configured by zsh-newuser-install
 
-#Dynamic aliases
-$(which lolcat > /dev/null) && alias cat='lolcat'
-$(which duf > /dev/null) && alias df='duf' || alias df='df -h'
-$(which procs > /dev/null) && alias ps='procs -p disable' || alias ps='ps aux'
-$(which lsd > /dev/null) && alias ls='lsd -l' || alias ps='ls -GFhl'
-
 #Start sheldon end plugins
 eval "$(sheldon source)"
-[[ $- == *i* ]] && source "${ZDOTDIR:-$HOME}/.sheldon/repos/github.com/sorin-ionescu/prezto/init.zsh" 2> /dev/null
-[[ $- == *i* ]] && source "${ZDOTDIR:-$HOME}/.sheldon/repos/github.com/lildude/fzf-prezto/init.zsh" 2> /dev/null
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Aliases
-alias group='cat /etc/group'
-alias ss='ss -pln'
-alias grep='grep --color=auto -a'
-# alias ssh='sshukh'
-#Use aliases with sudo
-alias sudo='sudo '
 
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -41,4 +25,5 @@ if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+
 p10k finalize

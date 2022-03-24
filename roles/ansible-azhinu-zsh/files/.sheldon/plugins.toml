@@ -13,20 +13,31 @@
 shell = "zsh"
 
 [plugins]
-[plugins.pretzo]
-github = 'sorin-ionescu/prezto'
-#
-[plugins.powerlevel10k]
-github = 'romkatv/powerlevel10k'
-
-[plugins.sshukh]
-github = 'anatolykopyl/sshukh'
-
-[plugins.fzf-plugin]
-github = 'lildude/fzf-prezto'
 
 [plugins.fast-syntax-highlighting]
-github = 'zdharma-continuum/fast-syntax-highlighting'
+github = "zdharma-continuum/fast-syntax-highlighting"
+
+[plugins.pretzo]
+github = "sorin-ionescu/prezto"
+use = ["/init.zsh"]
+proto = "ssh"
+
+[plugins.fzf-plugin]
+github = "lildude/fzf-prezto"
+proto = "ssh"
+
+
+[plugins.sshukh]
+github = "anatolykopyl/sshukh"
+proto = "ssh"
+
+[plugins.local]
+local = "~/.sheldon/local"
+
+[plugins.completions]
+local = "~/.sheldon/completions"
+apply = ["fpath"]
+
 # For example:
 #
 # [plugins.base16]
