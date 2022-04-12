@@ -13,6 +13,6 @@
     #       - s/^target\/x86_64-unknown-linux-gnu\/release\/rmate/atom/
     - name: Download rmate
       get_url:
-        url: 'https://github.com/azhinu/rmate-rs/releases/download/v1.1.1/rmate-{{ ansible_architecture }}-unknown-linux-musl'
+        url: 'https://github.com/azhinu/rmate-rs/releases/download/v1.1.2/rmate-{{ ansible_architecture }}-unknown-linux-musl'
         dest: /usr/local/bin/atom
         mode: '0755'
