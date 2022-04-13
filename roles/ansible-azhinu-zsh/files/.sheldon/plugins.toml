@@ -20,16 +20,13 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 [plugins.pretzo]
 github = "sorin-ionescu/prezto"
 use = ["/init.zsh"]
-proto = "ssh"
 
 [plugins.fzf-plugin]
 github = "lildude/fzf-prezto"
-proto = "ssh"
 
 
 [plugins.sshukh]
 github = "anatolykopyl/sshukh"
-proto = "ssh"
 
 [plugins.local]
 local = "~/.sheldon/local"
