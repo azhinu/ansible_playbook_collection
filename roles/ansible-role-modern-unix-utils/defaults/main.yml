@@ -14,6 +14,12 @@ modern_unix_utils_list:
       - --no-anchored
       - bat
 
+  - name: bandwhich
+    install: True
+    github_repo: imsnif/bandwhich
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: True
+
   - name: btm
     install: True
     alias: "top='/usr/local/bin/btm -b'"
