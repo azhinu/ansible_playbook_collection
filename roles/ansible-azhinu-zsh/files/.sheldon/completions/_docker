@@ -650,7 +650,6 @@ __docker_container_subcommand() {
         "($help)*"{-p=,--publish=}"[Expose a container's port to the host]:port:_ports"
         "($help)--pid=[PID namespace to use]:PID namespace:__docker_complete_pid"
         "($help)--privileged[Give extended privileges to this container]"
-        "($help -q --quiet)"{-q,--quiet}"[Suppress the pull output]"
         "($help)--read-only[Mount the container's root filesystem as read only]"
         "($help)*--security-opt=[Security options]:security option: "
         "($help)*--shm-size=[Size of '/dev/shm' (format is '<number><unit>')]:shm size: "
@@ -803,7 +802,7 @@ __docker_container_subcommand() {
                 "($help -a --all)"{-a,--all}"[Show all containers]" \
                 "($help)--before=[Show only container created before...]:containers:__docker_complete_containers" \
                 "($help)*"{-f=,--filter=}"[Filter values]:filter:__docker_complete_ps_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print containers using a Go template]:template: " \
                 "($help -l --latest)"{-l,--latest}"[Show only the latest created container]" \
                 "($help -n --last)"{-n=,--last=}"[Show n last created containers (includes all states)]:n:(1 5 10 25 50)" \
                 "($help)--no-trunc[Do not truncate output]" \
@@ -908,7 +907,7 @@ __docker_container_subcommand() {
             _arguments $(__docker_arguments) \
                 $opts_help \
                 "($help -a --all)"{-a,--all}"[Show all containers (default shows just running)]" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print images using a Go template]:template: " \
                 "($help)--no-stream[Disable streaming stats and only pull the first result]" \
                 "($help)--no-trunc[Do not truncate output]" \
                 "($help -)*:containers:__docker_complete_running_containers" && ret=0
@@ -1061,7 +1060,7 @@ __docker_image_subcommand() {
                 "($help -a --all)"{-a,--all}"[Show all images]" \
                 "($help)--digests[Show digests]" \
                 "($help)*"{-f=,--filter=}"[Filter values]:filter:__docker_complete_images_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print images using a Go template]:template: " \
                 "($help)--no-trunc[Do not truncate output]" \
                 "($help -q --quiet)"{-q,--quiet}"[Only show image IDs]" \
                 "($help -): :__docker_complete_repositories" && ret=0
@@ -1083,7 +1082,7 @@ __docker_image_subcommand() {
         (push)
             _arguments $(__docker_arguments) \
                 $opts_help \
-                "($help -a --all-tags)"{-a,--all-tags}"[Push all tags of an image to the repository]" \
+                "($help -a --all-tags)"{-a,--all-tags}"[Push all tagged images in the repository]" \
                 "($help)--disable-content-trust[Skip image signing]" \
                 "($help -): :__docker_complete_images" && ret=0
             ;;
@@ -1293,7 +1292,7 @@ __docker_network_subcommand() {
                 $opts_help \
                 "($help)--no-trunc[Do not truncate the output]" \
                 "($help)*"{-f=,--filter=}"[Provide filter values]:filter:__docker_network_complete_ls_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print networks using a Go template]:template: " \
                 "($help -q --quiet)"{-q,--quiet}"[Only display network IDs]" && ret=0
             ;;
         (prune)
@@ -2051,7 +2050,7 @@ __docker_service_subcommand() {
             _arguments $(__docker_arguments) \
                 $opts_help \
                 "($help)*"{-f=,--filter=}"[Filter output based on conditions provided]:filter:__docker_service_complete_ls_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print services using a Go template]:template: " \
                 "($help -q --quiet)"{-q,--quiet}"[Only display IDs]" && ret=0
             ;;
         (rm|remove)
@@ -2254,7 +2253,7 @@ __docker_stack_subcommand() {
             _arguments $(__docker_arguments) \
                 $opts_help \
                 "($help)*"{-f=,--filter=}"[Filter output based on conditions provided]:filter:__docker_stack_complete_services_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print services using a Go template]:template: " \
                 "($help -q --quiet)"{-q,--quiet}"[Only display IDs]" \
                 "($help -):stack:__docker_complete_stacks" && ret=0
             ;;
@@ -2521,7 +2520,7 @@ __docker_volume_subcommand() {
             _arguments $(__docker_arguments) \
                 $opts_help \
                 "($help)*"{-f=,--filter=}"[Provide filter values]:filter:__docker_volume_complete_ls_filters" \
-                "($help)--format=[Format the output using the given Go template]:template: " \
+                "($help)--format=[Pretty-print volumes using a Go template]:template: " \
                 "($help -q --quiet)"{-q,--quiet}"[Only display volume names]" && ret=0
             ;;
         (prune)
@@ -2653,7 +2652,7 @@ __docker_commands() {
     then
         local -a lines
         lines=(${(f)"$(_call_program commands docker 2>&1)"})
-        _docker_subcommands=(${${${(M)${lines[$((${lines[(i)*Commands:]} + 1)),-1]}:# *}## #}/ ##/:})
+        _docker_subcommands=(${${${(M)${lines[$((${lines[(i)*Commands:]} + 1)),-1]}:# *}## #}/\*# ##/:})
         _docker_subcommands=($_docker_subcommands 'daemon:Enable daemon mode' 'help:Show help for a command')
         (( $#_docker_subcommands > 2 )) && _store_cache docker_subcommands _docker_subcommands
     fi
