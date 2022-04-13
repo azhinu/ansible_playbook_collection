@@ -21,4 +21,4 @@
 	url = https://github.com/geerlingguy/ansible-role-docker
 [submodule "roles/ansible-role-auditbeat"]
 	path = roles/ansible-role-auditbeat
-	url = https://github.com/azhinu/ansible-role-auditbeat
+	url = https://github.com/j91321/ansible-role-auditbeat

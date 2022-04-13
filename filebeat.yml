@@ -1,3 +1,4 @@
+#syntax=source.ansible
 # https://github.com/geerlingguy/ansible-role-filebeat
 ---
 - hosts: "{{ selected_hosts }}"
