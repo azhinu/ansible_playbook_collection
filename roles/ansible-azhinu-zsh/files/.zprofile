@@ -36,6 +36,8 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
+# Disable P10K warning
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Set the list of directories that cd searches.
 # cdpath=(
 #   $cdpath
