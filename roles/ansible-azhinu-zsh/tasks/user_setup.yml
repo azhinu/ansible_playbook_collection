@@ -1,16 +1,16 @@
 #syntax=source.ansible
-# - name: "Copy dotfiles to homedir"
-#   copy:
-#     src: "{{ file }}"
-#     dest: "/home/{{ user }}/{{ file | basename }}"
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-#     mode: '644'
-#     force: "{{ force_copy_dotfiles }}"
-#   with_fileglob:
-#     - '.*'
-#   loop_control:
-#     loop_var: file
+- name: "Copy dotfiles to homedir"
+  copy:
+    src: "{{ file }}"
+    dest: "/home/{{ user }}/{{ file | basename }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '644'
+    force: "{{ force_copy_dotfiles }}"
+  with_fileglob:
+    - '.*'
+  loop_control:
+    loop_var: file
 
 # - name: "Create sheldon dir"
 #   file:
@@ -22,7 +22,7 @@
 
 - name: "Copy sheldon config to homedir"
   copy:
-    src: /
+    src: .sheldon
     dest: "/home/{{ user }}/"
     owner: "{{ user }}"
     group: "{{ user }}"
