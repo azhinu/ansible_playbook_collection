@@ -3,7 +3,7 @@
   file:
     path: "/usr/local/bin/{{ utility.name }}"
     state: absent
-  when: upgrade
+  when: upgrade|bool
 
 - name: Get latest release
   uri:

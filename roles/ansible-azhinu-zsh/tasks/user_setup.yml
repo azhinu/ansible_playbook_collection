@@ -6,7 +6,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0644
-    force: "{{ force_copy_dotfiles }}"
+    force: "{{ force_copy_dotfiles | bool }}"
   with_fileglob:
     - '.*'
   loop_control:
@@ -27,7 +27,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     # mode: '0755'
-    force: "{{ force_copy_dotfiles }}"
+    force: "{{ force_copy_dotfiles | bool }}"
     directory_mode: true
 
 - name: "Template dotfiles to homedir"
@@ -43,8 +43,8 @@
 
 - name: "Get ZSH path"
   command: command -v zsh
-  changed_when: false
-  failed_when: false
+  changed_when: False
+  failed_when: False
   register: zsh_path
 
 - name: Change default shell
