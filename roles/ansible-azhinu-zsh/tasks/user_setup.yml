@@ -5,7 +5,7 @@
     dest: "/home/{{ user }}/{{ file | basename }}"
     owner: "{{ user }}"
     group: "{{ user }}"
-    mode: '644'
+    mode: 0644
     force: "{{ force_copy_dotfiles }}"
   with_fileglob:
     - '.*'
