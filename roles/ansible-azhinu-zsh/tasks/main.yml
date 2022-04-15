@@ -24,7 +24,6 @@
   command: which sheldon
   changed_when: false
   failed_when: false
-  check_mode: no
   register: command_not_exist
 
 # Disable becouse of pip module is required on remote host.

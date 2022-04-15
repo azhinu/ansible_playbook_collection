@@ -12,7 +12,7 @@
   loop_control:
     loop_var: file
 
-- name: Create sheldon dir
+- name: "Create sheldon dir"
   file:
     path: /home/{{ user }}/.sheldon
     state: directory
@@ -41,7 +41,13 @@
   loop_control:
     loop_var: file
 
+- name: "Get ZSH path"
+  command: command -v zsh
+  changed_when: false
+  failed_when: false
+  register: zsh_path
+
 - name: Change default shell
   user:
     name: "{{ user }}"
-    shell: "{{ '/usr/local/bin/zsh' if ansible_os_family == 'Darwin' else '/bin/zsh' }}"
+    shell: "{{ zsh_path.stdout_lines }}"
