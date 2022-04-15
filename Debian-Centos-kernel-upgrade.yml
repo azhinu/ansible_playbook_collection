@@ -8,6 +8,10 @@
   vars:
     kernel_version: lt
   tasks:
+  - fail:
+      msg: Selected host OS doesnt Debian based of CentOs
+    when: not (ansible_distribution == 'CentOS' or ansible_distribution == 'Debian')
+
   - name: Centos block
     block:
     - name: Import ELRepo key
@@ -58,8 +62,3 @@
       state: latest
       default_release: "{{ansible_distribution_release}}-backports"
     when: ansible_os_family == 'Debian'
-
-
-  - fail:
-      msg: Selected host OS doesnt Debian based of CentOs
-    when: not (ansible_distribution == 'CentOS' or ansible_distribution == 'Debian')
