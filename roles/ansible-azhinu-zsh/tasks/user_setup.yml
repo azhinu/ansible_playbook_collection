@@ -42,7 +42,7 @@
     loop_var: file
 
 - name: "Get ZSH path"
-  command: command -v zsh
+  shell: command -v zsh
   changed_when: False
   failed_when: False
   register: zsh_path
