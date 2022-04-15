@@ -28,8 +28,8 @@ github = "lildude/fzf-prezto"
 [plugins.sshukh]
 github = "anatolykopyl/sshukh"
 
-[plugins.local]
-local = "~/.sheldon/local"
+# [plugins.local]
+# local = "~/.sheldon/local"
 
 [plugins.completions]
 local = "~/.sheldon/completions"
