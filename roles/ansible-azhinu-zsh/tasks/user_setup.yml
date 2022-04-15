@@ -50,4 +50,4 @@
 - name: Change default shell
   user:
     name: "{{ user }}"
-    shell: "{{ zsh_path.stdout_lines }}"
+    shell: "{{ zsh_path.stdout }}"
