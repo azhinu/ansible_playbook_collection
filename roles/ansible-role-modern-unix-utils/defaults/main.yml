@@ -52,6 +52,7 @@ modern_unix_utils_list:
     asset_name: x86_64-unknown-linux-musl.tar.gz
     is_archive: True
     extra_opts:
+      - --strip=1
       - --no-anchored
       - fd
 
@@ -90,5 +91,6 @@ modern_unix_utils_list:
     asset_name: x86_64-unknown-linux-musl.tar.gz
     is_archive: True
     extra_opts:
+      - --strip=1
       - --no-anchored
       - rg
