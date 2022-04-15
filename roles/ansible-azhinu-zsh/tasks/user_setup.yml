@@ -26,7 +26,8 @@
     dest: "/home/{{ user }}/"
     owner: "{{ user }}"
     group: "{{ user }}"
-    # mode: '0755'
+    mode: 0644
+    directory_mode: 0755
     force: "{{ force_copy_dotfiles | bool }}"
     directory_mode: true
 
