@@ -8,7 +8,7 @@
     update_password: "{{ item.update_password|default('on_create') }}"
     groups: "{{ item.groups|default(omit) }}"
     comment: "{{ item.comment|default(omit) }}"
-    shell: "{{ item.comment|default('/bin/bash') }}"
+    shell: "{{ item.shell|default('/bin/bash') }}"
     expires: -1
     append: true
     state: present
