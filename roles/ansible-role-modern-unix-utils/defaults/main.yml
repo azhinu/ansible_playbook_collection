@@ -2,6 +2,8 @@
 github_token: ""
 upgrade: False
 
+modern_unix_utils_list_extra: []
+
 modern_unix_utils_list:
   - name: bat
     install: True
