@@ -1,8 +1,10 @@
 #syntax=source.ansible
+- name: Combine lists
+
 - name: Install block
   include_tasks: install.yml
   when: utility.install | default(True)
-  loop: "{{ modern_unix_utils_list }}"
+  loop: "{{ modern_unix_utils_list | combine(modern_unix_utils_list_extra, recursive=True) }}"
   loop_control:
     loop_var: utility
 

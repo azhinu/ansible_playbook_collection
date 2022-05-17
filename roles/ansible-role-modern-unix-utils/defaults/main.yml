@@ -94,3 +94,9 @@ modern_unix_utils_list:
       - --strip=1
       - --no-anchored
       - rg
+
+  - name: zellij
+    install: True
+    github_repo: zellij-org/zellij
+    asset_name: zellij-x86_64-unknown-linux-musl.tar.gz
+    is_archive: True
