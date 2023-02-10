@@ -72,7 +72,7 @@ modern_unix_utils_list:
     install: true
     alias: "ps='/usr/local/bin/procs -p disable'"
     github_repo: dalance/procs
-    asset_name: lnx
+    asset_name: linux
     is_archive: True
 
 
