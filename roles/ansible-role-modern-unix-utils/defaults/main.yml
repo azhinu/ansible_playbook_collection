@@ -62,7 +62,7 @@ modern_unix_utils_list:
     install: True
     alias: "du='/usr/local/bin/gdu'"
     github_repo: dundee/gdu
-    asset_name: gdu_linux_amd64
+    asset_name: gdu_linux_amd64_static
     is_archive: True
     extra_opts:
       - --transform
