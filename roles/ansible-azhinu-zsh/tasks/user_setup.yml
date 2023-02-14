@@ -1,40 +1,30 @@
 #syntax=source.ansible
 - name: "Copy dotfiles to homedir"
-  copy:
+  ansible.builtin.copy:
     src: "{{ file }}"
     dest: "/home/{{ user }}/{{ file | basename }}"
     owner: "{{ user }}"
     group: "{{ user }}"
-    mode: 0644
+    mode: u=rwX,g=rX,o=rX
     force: "{{ force_copy_dotfiles | bool }}"
   with_fileglob:
     - '.*'
   loop_control:
     loop_var: file
 
-# - name: "Create sheldon dir"
-#   file:
-#     path: /home/{{ user }}/.sheldon
-#     state: directory
-#     owner: "{{ user }}"
-#     group: "{{ user }}"
-#     mode: '0755'
-
 - name: "Copy sheldon config to homedir"
-  copy:
+  ansible.builtin.copy:
     src: .sheldon
     dest: "/home/{{ user }}/"
     owner: "{{ user }}"
     group: "{{ user }}"
-    mode: 0644
-    directory_mode: 0755
+    mode: u=rwX,g=rX,o=rX
     force: "{{ force_copy_dotfiles | bool }}"
-    directory_mode: true
 
 - name: "Template dotfiles to homedir"
   ansible.builtin.template:
     src: "{{ file }}"
-    dest: /home/{{ user }}/{{ file | basename |  regex_replace('\.j2$', '') }}
+    dest: /home/{{ user }}/{{ file | basename | regex_replace('\.j2$', '') }}
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0644
@@ -43,12 +33,12 @@
     loop_var: file
 
 - name: "Get ZSH path"
-  shell: command -v zsh
-  changed_when: False
-  failed_when: False
+  ansible.builtin.shell: command -v zsh
+  changed_when: false
+  failed_when: false
   register: zsh_path
 
 - name: Change default shell
-  user:
+  ansible.builtin.user:
     name: "{{ user }}"
     shell: "{{ zsh_path.stdout }}"
