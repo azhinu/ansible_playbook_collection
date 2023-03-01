@@ -20,6 +20,7 @@ harden_linux_required_packages:
   - bash-completion-extras
   - wget
   - tar
+  - lnav
 
 harden_linux_required_packages_custom: []
 
