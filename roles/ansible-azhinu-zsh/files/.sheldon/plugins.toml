@@ -28,14 +28,9 @@ github = "lildude/fzf-prezto"
 [plugins.sshukh]
 github = "anatolykopyl/sshukh"
 
-# [plugins.local]
-# local = "~/.sheldon/local"
+[plugins.local]
+local = "~/.sheldon/local"
 
 [plugins.completions]
 local = "~/.sheldon/completions"
 apply = ["fpath"]
-
-# For example:
-#
-# [plugins.base16]
-# github = "chriskempson/base16-shell"
