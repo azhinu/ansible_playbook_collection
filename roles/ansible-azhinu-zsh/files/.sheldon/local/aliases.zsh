@@ -15,3 +15,4 @@ alias rsync="rsync --acls --xattrs --crtimes --fileflags"
 alias cat='/usr/local/bin/bat -P'
 alias df='/usr/local/bin/duf'
 alias ls='/usr/local/bin/lsd --total-size -l'
+alias lnav='lnav -q'
