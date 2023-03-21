@@ -1,0 +1,7 @@
+# syntax=source.ansible
+# https://github.com/azhinu/ansible-role-openvpn
+---
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - ansible-role-openvpn
