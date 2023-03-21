@@ -22,3 +22,6 @@
 [submodule "roles/ansible-role-auditbeat"]
 	path = roles/ansible-role-auditbeat
 	url = https://github.com/j91321/ansible-role-auditbeat
+[submodule "roles/ansible-role-openvpn"]
+	path = roles/ansible-role-openvpn
+	url = https://github.com/azhinu/ansible-role-openvpn
