@@ -3,5 +3,12 @@
 ---
 - hosts: "{{ selected_hosts }}"
   become: true
-  roles:
-    - prometheus.prometheus.node_exporter
+  tasks:
+    - name: Ensure node_exporter directory exist
+      ansible.builtin.file:
+        path: "{{ node_exporter_binary_install_dir | default('/usr/local/bin')  }}"
+        state: directory
+        mode: 0755
+    - name: Install node_exporter
+      ansible.builtin.include_role:
+        name: prometheus.prometheus.node_exporter
