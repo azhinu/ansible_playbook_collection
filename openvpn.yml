@@ -4,7 +4,9 @@
 - hosts: "{{ selected_hosts }}"
   become: true
   roles:
-    - ansible-role-openvpn
+    - role: ansible-role-openvpn
+    - role: ansible-openvpn-exporter
+      when: openvpn_exporter_enabled | default(false)
   tasks:
     - name: Install exporter
       block:
@@ -20,7 +22,7 @@
             mode: 0755
         - name: Download exporter
           ansible.builtin.get_url:
-            url: https://github.com/patrickjahns/openvpn_exporter/releases/download/v1.1.2/openvpn_exporter-linux-amd64
+            url: https://raw.githubusercontent.com/noris-network/ansible-openvpn-exporter/master/openvpn-exporter-kumina
             dest: "{{ openvpn_exporter_dir }}/openvpn_exporter"
             mode: 0755
         - name: Create exporter service
@@ -34,7 +36,7 @@
               User=root
               Group=root
               Type=simple
-              ExecStart={{ openvpn_exporter_dir }}/openvpn_exporter --status-file /etc/openvpn/status-openvpn_{{ openvpn_proto | default(udp) }}_{{ openvpn_port | default(1194) }}.log
+              ExecStart={{ openvpn_exporter_dir }}/openvpn_exporter -openvpn.status_paths /etc/openvpn/status-openvpn_{{ openvpn_proto | default(udp) }}_{{ openvpn_port | default(1194) }}.log
               [Install]
               WantedBy=multi-user.target
             dest: /etc/systemd/system/openvpn_exporter.service
