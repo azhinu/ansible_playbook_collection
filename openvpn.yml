@@ -5,3 +5,44 @@
   become: true
   roles:
     - ansible-role-openvpn
+  tasks:
+    - name: Install exporter
+      block:
+        - name: Set exporter directory
+          ansible.builtin.set_fact:
+            openvpn_exporter_dir: "{{ openvpn_exporter_dir | default(/opt/openvpn_exporter) }}"
+        - name: Ensure exporter directory is exist
+          ansible.builtin.file:
+            path: "{{ openvpn_exporter_dir  }}"
+            state: directory
+            owner: root
+            group: root
+            mode: 0755
+        - name: Download exporter
+          ansible.builtin.get_url:
+            url: https://github.com/patrickjahns/openvpn_exporter/releases/download/v1.1.2/openvpn_exporter-linux-amd64
+            dest: "{{ openvpn_exporter_dir }}/openvpn_exporter"
+            mode: 0755
+        - name: Create exporter service
+          ansible.builtin.copy:
+            content: |
+              [Unit]
+              Description=OpenVPN Exporter
+              Wants=openvpn.service
+              After=openvpn.service
+              [Service]
+              User=root
+              Group=root
+              Type=simple
+              ExecStart={{ openvpn_exporter_dir }}/openvpn_exporter --status-file /run/openvpn/openvpn_{{ openvpn_proto | default(udp) }}_{{ openvpn_port | default(1194) }}.status
+              [Install]
+              WantedBy=multi-user.target
+            dest: /etc/systemd/system/openvpn_exporter.service
+            mode: 0644
+        - name: Enable exporter service
+          ansible.builtin.systemd:
+            name: openvpn_exporter
+            daemon_reload: true
+            enabled: true
+            state: started
+      when: openvpn_exporter_enabled | default(false)
