@@ -34,7 +34,7 @@
               User=root
               Group=root
               Type=simple
-              ExecStart={{ openvpn_exporter_dir }}/openvpn_exporter --status-file /run/openvpn/openvpn_{{ openvpn_proto | default(udp) }}_{{ openvpn_port | default(1194) }}.status
+              ExecStart={{ openvpn_exporter_dir }}/openvpn_exporter --status-file /etc/openvpn/status-openvpn_{{ openvpn_proto | default(udp) }}_{{ openvpn_port | default(1194) }}.log
               [Install]
               WantedBy=multi-user.target
             dest: /etc/systemd/system/openvpn_exporter.service
