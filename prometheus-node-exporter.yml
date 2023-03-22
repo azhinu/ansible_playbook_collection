@@ -1,6 +1,7 @@
-#syntax=source.ansible
+# syntax=source.ansible
+# https://prometheus-community.github.io/ansible/branch/main/node_exporter_role.html
 ---
 - hosts: "{{ selected_hosts }}"
   become: true
   roles:
-    - cloudalchemy.node_exporter
+    - prometheus.prometheus.node_exporter
