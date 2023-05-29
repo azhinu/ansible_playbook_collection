@@ -11,7 +11,7 @@ SAVEHIST=1000
 # End of lines configured by zsh-newuser-install
 
 #Start sheldon end plugins
-eval "$(sheldon source)"
+eval "$(sheldon --config-dir ~/.sheldon --data-dir ~/.sheldon source)"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

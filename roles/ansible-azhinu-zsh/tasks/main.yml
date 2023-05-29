@@ -21,19 +21,10 @@
 #Start sheldon block
 #Which return rc 0 when command exists.
 - name: Check Sheldon installed
-  command: which sheldon
+  command: sheldon -V
   changed_when: false
   failed_when: false
   register: command_not_exist
-
-# Disable becouse of pip module is required on remote host.
-# - name: Get latest Sheldon release
-#   community.general.github_release:
-#     user: rossmacarthur
-#     repo: sheldon
-#     action: latest_release
-#   register: sheldon
-#   when: command_not_exist.rc | bool
 
 - name: Get Sheldon
   unarchive:
@@ -42,7 +33,7 @@
     mode: 0755
     remote_src: yes
     creates: /usr/local/bin/sheldon
-  when: command_not_exist.rc | bool
+  when: command_not_exist.stdout != "sheldon {{ sheldon_tag }}"
 #End sheldon block
 
 - name: Add user settings
