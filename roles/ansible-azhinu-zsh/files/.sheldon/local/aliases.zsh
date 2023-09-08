@@ -1,18 +1,21 @@
 #Dynamic aliases
+# Use `duf` if available or use `df` with human readable sizes
 $(which duf > /dev/null) && alias df='duf' || alias df='df -h'
-$(which procs > /dev/null) && alias ps='procs -p disable' || alias ps='ps aux'
-$(which lsd > /dev/null) && alias ls='lsd -l' || alias ps='ls -GFhl'
+# Use `procs` if available or add arg to `ps`
+$(which procs > /dev/null) && alias ps='procs -p disable' || alias ps='ps aux' 
+# Use `lsd` if available or use `ls` with color, human readable sizes and render as list.
+$(which lsd > /dev/null) && alias ls='lsd -l --total-size' || alias ps='ls -GFhl'
+# Use `bat` if available
+$(which bat > /dev/null) && alias cat='bat -P'
+# Use `lnav` in quiet mode
+alias lnav='lnav -q'
 
 # Aliases
-alias group='cat /etc/group'
-alias ss='ss -pln'
-alias grep='grep --color=auto -a'
+# Show listening sockets with processes and ports as numbers.
+alias ss='ss -pln' 
+# Use grep with colors
+alias grep='grep --color=auto'
 # Use aliases with sudo
 alias sudo='sudo '
-# Rsync preserve arrts. Works only with modern rsync
-# alias rsync="rsync --acls --xattrs --crtimes --fileflags"
-
-alias cat='/usr/local/bin/bat -P'
-alias df='/usr/local/bin/duf'
-alias ls='/usr/local/bin/lsd --total-size -l'
-alias lnav='lnav -q'
+# Rsync preserve arrts. Works only with modern rsync on mac
+[[ "$OSTYPE" == "darwin"* ]] && alias rsync="rsync --acls --xattrs --crtimes --fileflags"
