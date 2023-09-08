@@ -12,6 +12,7 @@
     headers:
       Authorization: "{{ github_token }}"
   register: github_response
+  run_once: true
 
 - name: Set download link
   set_fact:
