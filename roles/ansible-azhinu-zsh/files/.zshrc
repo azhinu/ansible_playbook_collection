@@ -18,6 +18,9 @@ eval "$(sheldon --config-dir ~/.sheldon --data-dir ~/.sheldon source)"
 export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# Fix Python forking on macOS
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
 autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
   compinit
