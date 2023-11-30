@@ -18,7 +18,7 @@ fi
 #
 
 export EDITOR='nano'
-export VISUAL='atom'
+export VISUAL='code'
 export PAGER='bat'
 
 #
