@@ -25,3 +25,6 @@
 [submodule "roles/ansible-role-openvpn"]
 	path = roles/ansible-role-openvpn
 	url = https://github.com/azhinu/ansible-role-openvpn
+[submodule "roles/ansible-process-exporter"]
+	path = roles/ansible-process-exporter
+	url = https://github.com/azhinu/ansible-process-exporter/
