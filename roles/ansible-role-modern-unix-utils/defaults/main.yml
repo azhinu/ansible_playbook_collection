@@ -1,69 +1,69 @@
 #syntax=source.ansible
 github_token: ""
-upgrade: False
+upgrade: false
 
 modern_unix_utils_list_extra: []
 
 modern_unix_utils_list:
   - name: bat
-    install: True
+    install: true
     alias: "cat='/usr/local/bin/bat -P'"
     github_repo: sharkdp/bat
-    asset_name: x86_64-unknown-linux-musl
-    is_archive: True
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: true
     extra_opts:
       - --strip=1
       - --no-anchored
       - bat
 
   - name: bandwhich
-    install: True
+    install: true
     github_repo: imsnif/bandwhich
     asset_name: x86_64-unknown-linux-musl.tar.gz
-    is_archive: True
+    is_archive: true
 
   - name: btm
-    install: True
+    install: true
     alias: "top='/usr/local/bin/btm -b'"
     github_repo: ClementTsang/bottom
     asset_name: bottom_x86_64-unknown-linux-musl.tar.gz
-    is_archive: True
+    is_archive: true
     extra_opts:
       - --no-anchored
       - btm
 
   - name: ctop
-    install: True
+    install: true
     github_repo: bcicen/ctop
     asset_name: linux-amd64
-    is_archive: False
+    is_archive: false
 
   - name: duf
-    install: True
+    install: true
     alias: "df='/usr/local/bin/duf'"
     github_repo: muesli/duf
     asset_name: linux_x86_64.tar.gz
-    is_archive: True
+    is_archive: true
     extra_opts:
       - --no-anchored
       - duf
 
   - name: fd
-    install: True
+    install: true
     github_repo: sharkdp/fd
     asset_name: x86_64-unknown-linux-musl.tar.gz
-    is_archive: True
+    is_archive: true
     extra_opts:
       - --strip=1
       - --no-anchored
       - fd
 
   - name: gdu
-    install: True
+    install: true
     alias: "du='/usr/local/bin/gdu'"
     github_repo: dundee/gdu
-    asset_name: gdu_linux_amd64_static
-    is_archive: True
+    asset_name: linux_amd64_static.tgz
+    is_archive: true
     extra_opts:
       - --transform
       - s/^gdu_linux_amd64_static/gdu/
@@ -72,33 +72,33 @@ modern_unix_utils_list:
     install: true
     alias: "ps='/usr/local/bin/procs -p disable'"
     github_repo: dalance/procs
-    asset_name: linux
-    is_archive: True
+    asset_name: x86_64-linux.zip
+    is_archive: true
 
 
   - name: lsd
-    install: True
+    install: true
     alias: "ls='/usr/local/bin/lsd --total-size -l'"
-    github_repo: Peltoche/lsd
-    asset_name: x86_64-unknown-linux-musl
-    is_archive: True
+    github_repo: lsd-rs/lsd
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: true
     extra_opts:
       - --strip=1
       - --no-anchored
       - lsd
 
   - name: ripgrep
-    install: True
+    install: true
     github_repo: BurntSushi/ripgrep
     asset_name: x86_64-unknown-linux-musl.tar.gz
-    is_archive: True
+    is_archive: true
     extra_opts:
       - --strip=1
       - --no-anchored
       - rg
 
   - name: zellij
-    install: True
+    install: true
     github_repo: zellij-org/zellij
     asset_name: zellij-x86_64-unknown-linux-musl.tar.gz
-    is_archive: True
+    is_archive: true

@@ -14,7 +14,7 @@ upgrade: True #Remove binaries before downloading. Default 'False'
   install: True #Optional. By default `True`.
   alias: "ls='/usr/local/bin/lsd'" #Optional. Used to create alias. In form of alias {{ alias }}
   github_repo: Peltoche/lsd #Github user and repo name.
-  asset_name: x86_64-unknown-linux-musl #String to find specific asset
+  asset_name: x86_64-unknown-linux-musl.tgz #End of asset name string.
   is_archive: True #Optional. Default `False`. If archive, using `unarchive` module, else using `get_url` module.
   extra_opts: #Optional. Extra options to unarchive.
     - --strip=1

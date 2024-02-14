@@ -18,7 +18,7 @@
   set_fact:
     github_package_name: "{{ github_response.json.assets | json_query(jq) | join }}"
   vars:
-    jq: "[?contains(browser_download_url,'{{ utility.asset_name }}')].browser_download_url"
+    jq: "[?ends_with(browser_download_url,'{{ utility.asset_name }}')].browser_download_url"
 
 - name: Download link
   debug:
