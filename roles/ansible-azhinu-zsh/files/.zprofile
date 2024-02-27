@@ -5,6 +5,9 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Don't compinit before local config applied
+skip_global_compinit=1
+
 #
 # Browser
 #
