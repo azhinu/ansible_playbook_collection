@@ -19,6 +19,11 @@ export FZF_DEFAULT_COMMAND='fd --type file'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export ZELLIJ_CONFIG_FILE="$HOME/zellij.kdl"
 
+# Load fzf assets if fzf exists
+if [ ! -f /usr/local/bin/fzf ]; then
+    source <(fzf --zsh)
+fi
+
 # Fix Python forking on macOS
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 

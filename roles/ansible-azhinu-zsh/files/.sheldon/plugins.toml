@@ -21,8 +21,8 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 github = "sorin-ionescu/prezto"
 use = ["/init.zsh"]
 
-[plugins.fzf-plugin]
-github = "lildude/fzf-prezto"
+#[plugins.fzf-plugin]
+#github = "lildude/fzf-prezto"
 
 
 [plugins.sshukh]
