@@ -19,10 +19,12 @@
     github_package_name: "{{ github_response.json.assets | json_query(jq) | join }}"
   vars:
     jq: "[?ends_with(browser_download_url,'{{ utility.asset_name }}')].browser_download_url"
+  run_once: true
 
 - name: Download link
   debug:
     var: github_package_name
+  run_once: true
 - name: Download app (archive)
   unarchive:
     src: "{{ github_package_name }}"
