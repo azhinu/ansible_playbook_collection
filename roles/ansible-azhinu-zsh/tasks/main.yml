@@ -13,7 +13,6 @@
       - zsh
       - git
       - wget
-      - fzf
     state: present
   #Brew don't work from root user on macOS
   when: not (ansible_user_id == 'root' and ansible_os_family == 'Darwin')
