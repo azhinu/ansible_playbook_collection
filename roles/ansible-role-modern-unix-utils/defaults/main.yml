@@ -58,6 +58,12 @@ modern_unix_utils_list:
       - --no-anchored
       - fd
 
+  - name: fzf
+    install: true
+    github_repo: junegunn/fzf
+    asset_name: linux_amd64.tar.gz
+    is_archive: true
+
   - name: gdu
     install: true
     alias: "du='/usr/local/bin/gdu'"
