@@ -1,0 +1,90 @@
+# syntax=ansible
+# yamllint disable rule:line-length
+---
+- name: Provision datasources
+  ansible.builtin.copy:
+    content: "{{ grafana_datasources }}"
+    dest: "{{ grafana_install_dir }}/provisioning/datasources/datasources.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags:
+    - provisioning
+    - datasources
+
+- name: Provision dashboards
+  ansible.builtin.copy:
+    content: |
+      apiVersion: 1
+      providers:
+        - name: 'default'
+          org_id: 1
+          folder: ''
+          type: 'file'
+          options:
+            path: '/usr/share/grafana/dashboards'
+
+    dest: "{{ grafana_install_dir }}/provisioning/dashboards/dashboards.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags:
+    - provisioning
+    - dashboards
+
+- name: Provision alering message templates
+  ansible.builtin.copy:
+    src: message-template.yml
+    dest: "{{ grafana_install_dir }}/provisioning/alerting/message-template.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags:
+    - provisioning
+    - templates
+
+- name: Provision alerting contact points
+  ansible.builtin.copy:
+    content: "{{ grafana_contact_points }}"
+    dest: "{{ grafana_install_dir }}/provisioning/alerting/contact-points.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags:
+    - provisioning
+    - contact-points
+
+- name: Provision alerting notification policies
+  ansible.builtin.copy:
+    content: "{{ grafana_notification_policies }}"
+    dest: "{{ grafana_install_dir }}/provisioning/alerting/notification-policies.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags:
+    - provisioning
+    - notification-policies
+
+- name: Provision alerts
+  ansible.builtin.copy:
+    src: "alerts/{{ item }}"
+    dest: "{{ grafana_install_dir }}/provisioning/alerting/{{ item }}"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  loop: "{{ grafana_alerts }}"
+  tags:
+    - provisioning
+    - alerts
+
+- name: Install dashboards
+  ansible.builtin.copy:
+    src: "dashboards/{{ item }}"
+    dest: "{{ grafana_install_dir }}/dashboards/{{ item }}"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  loop: "{{ grafana_dashboards }}"
+  tags:
+    - provisioning
+    - dashboards

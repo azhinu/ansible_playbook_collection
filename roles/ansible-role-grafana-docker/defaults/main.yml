@@ -1,0 +1,140 @@
+# yamllint disable rule:line-length
+---
+grafana_install_dir: /opt/grafana
+grafana_version: 9.4.13
+# Setup provisioning
+grafana_provisioning: false
+# Password using grafana to connect postgresql
+grafana_db_password:
+# S3 Access key for grafana screenshots
+grafana_s3_access_key:
+# S3 Secret key for grafana screenshots
+grafana_s3_secret_key:
+# Docs: https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
+# Database connection and render plugin is configured by default. No need to configure it in this section.
+grafana_config: |
+    GF_DEFAULT_INSTANCE_NAME: mon-01
+    GF_DEFAULT_ROOT_URL: https://grafana.myproject.org/
+
+
+    GF_UNIFIED_ALERTING_SCREENSHOTS_CAPTURE: true
+    GF_UNIFIED_ALERTING_SCREENSHOTS_UPLOAD_EXTERNAL_IMAGE_STORAGE: true
+
+    GF_EXTERNAL_IMAGE_STORAGE_PROVIDER: s3
+    GF_EXTERNAL_IMAGE_STORAGE_S3_ENDPOINT: https://storage.yandexcloud.net/
+    GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET: eva-grafana-screenshots
+    GF_EXTERNAL_IMAGE_STORAGE_S3_REGION: ru-central1
+    GF_EXTERNAL_IMAGE_STORAGE_S3_ACCESS_KEY: ${GF_S3_ACCESS_KEY}
+    GF_EXTERNAL_IMAGE_STORAGE_S3_SECRET_KEY: ${GF_S3_SECRET_KEY}
+# List of dashboards to install
+grafana_dashboards:
+  - blackbox_exporter.json
+  - centrifugo.json
+  - clickhouse.json
+  - docker.json
+  - haproxy.json
+  - minio.json
+  - mysqld_mod.json
+  - mysqld_replication_mod.json
+  - nginxlog.json
+  - node_exporter.json
+  - openvpn.json
+  - postgresql.json
+  - process-exporter_mod.json
+  - prometheus.json
+  - rabbitmq.json
+  - rabbitmq_detailed_mod.json
+  - redis.json
+# List of alerts set to install
+grafana_alerts:
+  - clickhouse.yml
+  - minio.yml
+  - mysql.yml
+  - node_exporter.yml
+  - prometheus.yml
+  - rabbitmq.yml
+  - redis.yml
+  - web.yml
+# Datasource provisioning file
+# Docs: https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources
+grafana_datasources: |
+  apiVersion: 1
+  datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      org_id: 1
+      url: http://172.17.0.1:9090
+      is_default: true
+      editable: true
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://172.17.0.1:3100
+      jsonData:
+        timeout: 120
+      maxLines: 1000
+      editable: true
+# Contact points provisioning file. You should use {% raw %} to escape templating
+# Docs: https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/#provision-contact-points
+grafana_contact_points: |
+  {% raw %}
+  apiVersion: 1
+  contactPoints:
+      # <int> organization ID, default = 1
+    - orgId: 1
+      # <string, required> name of the contact point
+      name: Rocket
+      receivers:
+        # <string, required> unique identifier for the receiver
+      - uid: Fsh_7Z97k
+        # <string, required> type of the receiver
+        type: webhook
+        # <object, required> settings for the specific receiver type
+        settings:
+          url: "[REDACTED]"
+          message: '{{ template "rocket.text" .}}'
+          title: '{{ template "rocket.title" . }}'
+    - orgId: 1
+      name: Rocket (no-resolve)
+      receivers:
+      - uid: zzmAM6EVz
+        type: webhook
+        disableResolveMessage: true
+        settings:
+          url: "[REDACTED]"
+          message: '{{ template "rocket.text" .}}'
+          title: '{{ template "rocket.title" . }}'
+    - orgId: 1
+      name: Rocket test channel
+      receivers:
+      - uid: zzmAM6EVG
+        type: webhook
+        settings:
+          url: "[REDACTED]"
+          message: '{{ template "rocket.text" .}}'
+          title: '{{ template "rocket.title" . }}'
+  {% endraw %}
+# Notification policies provisioning file
+# Docs https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/#provision-notification-policies
+grafana_notification_policies: |
+  apiVersion: 1
+  # List of notification policies
+  policies:
+    # <int> organization ID, default = 1
+    - orgId: 1
+      # <string> name of the contact point that should be used for this route
+      receiver: Rocket
+      group_by: ['...']
+      group_wait: 1s
+      group_interval: 1m
+      repeat_interval: 4h
+      # <list> Zero or more child routes
+      routes:
+        - receiver: Rocket (no-resolve)
+          matchers:
+            - channel != test
+            - severity = info
+        - receiver: Rocket test channel
+          matchers:
+            - channel = test

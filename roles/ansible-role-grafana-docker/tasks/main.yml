@@ -1,0 +1,131 @@
+# syntax=ansible
+# yamllint disable rule:line-length
+---
+- name: Check if docker compose is installed
+  ansible.builtin.command:
+    cmd: docker compose version
+  changed_when: false
+  failed_when: false
+  register: check_docker_compose
+  tags: checks
+
+- name: No docker compose detected
+  ansible.builtin.fail:
+    msg: "Docker compose plugin is not installed"
+  when: check_docker_compose.rc != 0
+  tags: checks
+
+- name: Ensure Grafana DB password is set
+  ansible.builtin.fail:
+    msg: "grafana_db_password is not set"
+  when: grafana_db_password is undefined or grafana_db_password == None or grafana_db_password | length == 0
+  tags: checks
+
+- name: Ensure monitoring group exist
+  ansible.builtin.group:
+    name: monitoring
+    state: present
+  tags: checks
+
+- name: Ensure monitoring user exist
+  ansible.builtin.user:
+    name: monitoring
+    # Set docker grafana user gid
+    # uid: 472
+    create_home: false
+    state: present
+    system: true
+    groups: monitoring
+  tags: checks
+
+- name: Create Grafana dirs
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: monitoring
+    group: monitoring
+    mode: 0755
+  loop:
+    - "{{ grafana_install_dir }}"
+    - "{{ grafana_install_dir }}/dashboards"
+    - "{{ grafana_install_dir }}/provisioning"
+    - "{{ grafana_install_dir }}/provisioning/alerting"
+    - "{{ grafana_install_dir }}/provisioning/dashboards"
+    - "{{ grafana_install_dir }}/provisioning/datasources"
+    - "{{ grafana_install_dir }}/provisioning/plugins"
+    - "{{ grafana_install_dir }}/provisioning/notifiers"
+  tags: install
+  # Create dir with Docker Grafana user permissions
+- name: Create Grafana data dir
+  ansible.builtin.file:
+    path: "{{ grafana_install_dir }}/grafana-data"
+    state: directory
+    owner: 472
+    group: 0
+    mode: 0755
+  tags: install
+
+- name: Update version file
+  ansible.builtin.copy:
+    content: "{{ grafana_version }}"
+    dest: "{{ grafana_install_dir }}/VERSION"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags: install
+
+- name: Copy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ grafana_install_dir }}/docker-compose.yml"
+    owner: monitoring
+    group: monitoring
+    mode: 0644
+  tags: install
+
+- name: Create .env file
+  ansible.builtin.copy:
+    content: |
+      GF_S3_ACCESS_KEY={{ grafana_s3_access_key }}
+      GF_S3_SECRET_KEY={{ grafana_s3_secret_key }}
+      DB_GRAFANA_PASSWORD={{ grafana_db_password }}
+    dest: "{{ grafana_install_dir }}/.env"
+    owner: monitoring
+    group: monitoring
+    mode: 0660
+  tags: install
+
+- name: Run provisioning
+  ansible.builtin.include_tasks: provisioning.yml
+  when: grafana_provisioning | bool
+
+- name: Start Grafana
+  ansible.builtin.command:
+    cmd: docker compose up -d --force-recreate
+    chdir: "{{ grafana_install_dir }}"
+  changed_when: true
+  tags:
+    - install
+    - provisioning
+
+- name: Check Grafana is up
+  ansible.builtin.wait_for:
+    host: localhost
+    port: 3000
+    state: started
+    delay: 15
+  tags:
+    - install
+    - provisioning
+
+- name: Check Grafana version
+  ansible.builtin.slurp:
+    src: "{{ grafana_install_dir }}/VERSION"
+  register: grafana_installed_version
+  tags: check_version
+
+
+- name: Grafana version is
+  ansible.builtin.debug:
+    var: grafana_installed_version.content | b64decode
+  tags: check_version

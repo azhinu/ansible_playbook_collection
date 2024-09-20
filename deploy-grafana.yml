@@ -1,0 +1,7 @@
+# syntax=source.ansible
+# https://git.intermb.ru/arina.klavinen/ansible-role-grafana-docker
+---
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - ansible-role-grafana-docker
