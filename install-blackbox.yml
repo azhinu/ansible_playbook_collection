@@ -1,0 +1,8 @@
+# syntax=source.ansible
+# https://github.com/prometheus-community/ansible/tree/main/roles/blackbox_exporter
+# https://prometheus-community.github.io/ansible/branch/main/blackbox_exporter_role.html#ansible-collections-prometheus-prometheus-blackbox-exporter-role
+---
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - prometheus.prometheus.blackbox_exporter

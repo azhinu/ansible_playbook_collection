@@ -10,9 +10,6 @@
 [submodule "roles/ansible-role-wireguard"]
 	path = roles/ansible-role-wireguard
 	url = https://github.com/githubixx/ansible-role-wireguard
-[submodule "roles/haxorof.ansible-role-docker-ce"]
-	path = roles/haxorof.ansible-role-docker-ce
-	url = https://github.com/haxorof/ansible-role-docker-ce
 [submodule "roles/ansible-role-filebeat"]
 	path = roles/ansible-role-filebeat
 	url = https://github.com/geerlingguy/ansible-role-filebeat
