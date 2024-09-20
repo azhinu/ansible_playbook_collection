@@ -1,0 +1,12 @@
+# syntax=source.ansible
+# https://github.com/azhinu/ansible-process-exporter
+# https://github.com/ncabatoff/process-exporter
+---
+- hosts: "{{ selected_hosts }}"
+  become: true
+  roles:
+    - ansible-process-exporter
+  vars:
+    process_exporter_version: 0.7.10
+    process_exporter_config_dir: /opt/process-exporter
+    process_exporter_bin_dir: /opt/process-exporter
