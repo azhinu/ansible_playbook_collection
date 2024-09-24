@@ -42,6 +42,14 @@ SET provenance = ''
 3. Restart Grafana
 
 
+### If you have issue with datasource ID
+Open Grafana database and run this query:
+```sql
+UPDATE data_source 
+SET uid='PBFA97CFB590B2093' WHERE name='Prometheus';
+```
+This will change datasource ID to original value.
+
 ## About
 
 ### Alerts
