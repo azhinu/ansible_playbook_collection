@@ -108,11 +108,11 @@
   when: ansible_os_family == 'Debian'
 
 - name: Ensure the locale exists
-  command: "localedef -f UTF-8 -i en_DK en_DK.UTF-8"
+  command: "localedef -f UTF-8 -i C C.UTF-8"
   ignore_errors: true
 
-- name: Set en_DK.UTF-8 as default locale
-  command: localectl set-locale LANG=en_DK.UTF-8 LC_CTYPE=en_DK.UTF-8
+- name: Set C.UTF-8 as default locale
+  command: localectl set-locale LANG=C.UTF-8 LC_CTYPE=C.UTF-8
   ignore_errors: true
 
 - name: Check SSHGuard whitelist exist
