@@ -105,7 +105,7 @@
   community.general.ufw:
     state: enabled
     logging: "{{ harden_linux_ufw_logging }}"
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and harden_linux_ufw
 
 - name: Ensure the locale exists
   command: "localedef -f UTF-8 -i C C.UTF-8"

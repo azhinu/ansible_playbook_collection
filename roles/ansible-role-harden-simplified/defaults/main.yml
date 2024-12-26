@@ -87,6 +87,8 @@ harden_linux_ufw_defaults:
   "^(#|)IPT_SYSCTL": 'IPT_SYSCTL=/etc/ufw/sysctl.conf'
   "^(#|)IPT_MODULES": 'IPT_MODULES="nf_conntrack_ftp nf_nat_ftp nf_conntrack_netbios_ns"'
 
+# Disable/enable UFW
+harden_linux_ufw: false
 # Disable/enable UFW logging
 harden_linux_ufw_logging: 'off'
 
