@@ -1,11 +1,10 @@
-#My Atom syntax selector
 #syntax=source.ansible
 ---
 
-- name: Update package cache
-  package:
-    update_cache: yes
-  when: ansible_os_family != 'Darwin'
+# - name: Update package cache
+#   package:
+#     update_cache: yes
+#   when: ansible_os_family != 'Darwin'
 
 - name: Install zsh, git, wget
   package:
@@ -14,6 +13,7 @@
       - git
       - wget
     state: present
+    update_cache: yes
   #Brew don't work from root user on macOS
   when: not (ansible_user_id == 'root' and ansible_os_family == 'Darwin')
 
