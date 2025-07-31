@@ -21,7 +21,7 @@ fi
 #
 
 export EDITOR='nano'
-export VISUAL='code'
+export VISUAL='atom'
 export PAGER='bat'
 
 #
@@ -45,7 +45,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # cdpath=(
 #   $cdpath
 # )
-
+if [[ "$OSTYPE" == darwin* ]]; then
 # Set the list of directories that Zsh searches for programs.
 brewprefix=$([[ $(uname -m) == "x86_64" ]] && echo "/usr/local" || echo "/opt/homebrew")
 path=(
@@ -54,7 +54,7 @@ path=(
   $brewprefix/opt/grep/libexec/gnubin
   $path
 )
-
+fi
 #
 # Less
 #
