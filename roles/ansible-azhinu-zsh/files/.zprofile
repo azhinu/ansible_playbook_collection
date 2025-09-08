@@ -22,7 +22,7 @@ fi
 
 export EDITOR='nano'
 export VISUAL='atom'
-export PAGER='bat'
+export PAGER='bat -p'
 
 #
 # Language
