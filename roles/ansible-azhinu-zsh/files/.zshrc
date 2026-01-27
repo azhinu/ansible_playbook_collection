@@ -6,9 +6,13 @@
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-# End of lines configured by zsh-newuser-install
+HISTSIZE=5000
+SAVEHIST=5000
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE
 
 #Start sheldon end plugins
 eval "$(sheldon --config-dir ~/.sheldon --data-dir ~/.sheldon source)"
