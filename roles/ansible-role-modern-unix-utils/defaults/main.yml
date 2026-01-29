@@ -108,3 +108,13 @@ modern_unix_utils_list:
     github_repo: zellij-org/zellij
     asset_name: zellij-x86_64-unknown-linux-musl.tar.gz
     is_archive: true
+
+  - name: micro
+    install: true
+    github_repo: micro-editor/micro
+    asset_name: linux64-static.tar.gz
+    is_archive: true
+    extra_opts:
+      - --strip=1
+      - --no-anchored
+      - micro
