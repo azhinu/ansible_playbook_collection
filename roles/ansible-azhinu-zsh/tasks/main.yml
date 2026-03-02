@@ -32,12 +32,12 @@
     mode: 0755
     remote_src: true
     creates: /usr/local/bin/sheldon
-  when: command_not_exist.stdout != ("sheldon " + sheldon_tag)
+  when: command_not_exist.stdout != ("sheldon " + zsh_sheldon_tag)
 # End sheldon block
 
 - name: Add user settings
   ansible.builtin.include_tasks: user_setup.yml
-  when: users is defined
-  loop: "{{ users }}"
+  when: zsh_users is defined
+  loop: "{{ zsh_users }}"
   loop_control:
     loop_var: user
