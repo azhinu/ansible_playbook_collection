@@ -7,7 +7,6 @@ modern_unix_utils_list_extra: []
 modern_unix_utils_list:
   - name: bat
     install: true
-    alias: "cat='/usr/local/bin/bat -P'"
     github_repo: sharkdp/bat
     asset_name: x86_64-unknown-linux-musl.tar.gz
     is_archive: true
@@ -24,7 +23,6 @@ modern_unix_utils_list:
 
   - name: btm
     install: true
-    alias: "top='/usr/local/bin/btm -b'"
     github_repo: ClementTsang/bottom
     asset_name: bottom_x86_64-unknown-linux-musl.tar.gz
     is_archive: true
@@ -40,7 +38,6 @@ modern_unix_utils_list:
 
   - name: duf
     install: true
-    alias: "df='/usr/local/bin/duf'"
     github_repo: muesli/duf
     asset_name: linux_x86_64.tar.gz
     is_archive: true
@@ -66,7 +63,6 @@ modern_unix_utils_list:
 
   - name: gdu
     install: true
-    alias: "du='/usr/local/bin/gdu'"
     github_repo: dundee/gdu
     asset_name: linux_amd64_static.tgz
     is_archive: true
@@ -76,7 +72,6 @@ modern_unix_utils_list:
 
   - name: procs
     install: true
-    alias: "ps='/usr/local/bin/procs -p disable'"
     github_repo: dalance/procs
     asset_name: x86_64-linux.zip
     is_archive: true
@@ -84,7 +79,6 @@ modern_unix_utils_list:
 
   - name: lsd
     install: true
-    alias: "ls='/usr/local/bin/lsd --total-size -l'"
     github_repo: lsd-rs/lsd
     asset_name: x86_64-unknown-linux-musl.tar.gz
     is_archive: true
@@ -118,3 +112,13 @@ modern_unix_utils_list:
       - --strip=1
       - --no-anchored
       - micro
+
+  - name: sd
+    install: true
+    github_repo: chmln/sd
+    asset_name: x86_64-unknown-linux-musl.tar.gz
+    is_archive: true
+    extra_opts:
+      - --strip=1
+      - --no-anchored
+      - sd
